@@ -1,4 +1,4 @@
-const CACHE = 'hyrox-sp-v1';
+const CACHE = 'hyrox-sp-v2';
 const ASSETS = [
   '/',
   '/index.html',
