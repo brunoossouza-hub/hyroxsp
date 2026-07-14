@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HYROX SP">
+<title>BRUNO / HYROX SP 2026</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230A0A0A'/%3E%3Ctext x='50' y='72' font-family='Arial Black' font-size='66' font-weight='900' text-anchor='middle' fill='%23FFD500'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='32' fill='%230A0A0A'/%3E%3Ctext x='90' y='128' font-family='Arial Black' font-size='118' font-weight='900' text-anchor='middle' fill='%23FFD500'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --surface-2: #1C1C1C;
+  --surface-3: #262626;
+  --border: #2A2A2A;
+  --border-bright: #3A3A3A;
+  --text: #FAFAFA;
+  --text-muted: #8B8B8B;
+  --text-dim: #555;
+  --yellow: #FFD500;
+  --yellow-hover: #FFE040;
+  --yellow-dim: #B89800;
+  --green: #4ADE80;
+  --blue: #60A5FA;
+  --orange: #FB923C;
+  --red: #EF4444;
+  --gray: #6B7280;
+  --display: 'Barlow Condensed', sans-serif;
+  --body: 'Outfit', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.5; min-height: 100vh; overscroll-behavior-y: contain; }
+body { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0)); padding-top: env(safe-area-inset-top, 0); }
+
+header.app-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 18px 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: rgba(10,10,10,0.92);
+}
+.brand {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.brand-mark {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brand-mark .yellow { color: var(--yellow); }
+.brand-mark .slash { color: var(--text-dim); margin: 0 5px; }
+.race-counter {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.3;
+}
+.race-counter .num {
+  font-family: var(--display);
+  font-weight: 800;
+  color: var(--yellow);
+  font-size: 22px;
+  line-height: 1;
+  display: block;
+}
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+.phase-pill {
+  flex: 1;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 6px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-align: center;
+}
+.phase-pill.active {
+  background: var(--yellow);
+  color: #000;
+  border-color: var(--yellow);
+}
+.phase-pill .week-count {
+  display: block;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+nav.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+nav.tabs button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 2px 12px;
+  cursor: pointer;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-top: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+nav.tabs button.active {
+  color: var(--yellow);
+  border-top-color: var(--yellow);
+}
+
+main { padding: 16px 18px 24px; max-width: 760px; margin: 0 auto; }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+h1.page-title {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+h1.page-title .accent { color: var(--yellow); }
+.page-subtitle {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-subtitle::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--yellow);
+}
+
+h2.section-title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 26px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h2.section-title::before {
+  content: "";
+  width: 4px;
+  height: 16px;
+  background: var(--yellow);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card.elevated { background: var(--surface-2); }
+
+.dashboard {
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.dash-row-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.dash-progress-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+.dash-progress-num {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--yellow);
+}
+.dash-progress-suffix {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+.dash-bar {
+  height: 4px;
+  background: var(--surface-3);
+  margin-top: 8px;
+  overflow: hidden;
+}
+.dash-bar-fill {
+  height: 100%;
+  background: var(--yellow);
+  transition: width .4s;
+}
+.dash-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.dash-stat { text-align: center; }
+.dash-stat-num {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1;
+}
+.dash-stat-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+.today-hero {
+  background: linear-gradient(135deg, #1A1500 0%, var(--surface) 60%);
+  border: 1px solid var(--yellow-dim);
+  padding: 20px 18px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.today-hero::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(255,213,0,0.08), transparent 70%);
+  pointer-events: none;
+}
+.today-tag {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--yellow);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.today-tag .dot {
+  width: 6px; height: 6px;
+  background: var(--yellow);
+  border-radius: 50%;
+  animation: pulse 1.6s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+.today-date {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 30px;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.today-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.workout-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.workout-block.primary { border-left: 3px solid var(--yellow); }
+.workout-block.secondary { border-left: 3px solid var(--gray); opacity: 0.95; }
+.workout-block.optional { border-left: 3px solid var(--text-dim); border-style: dashed; }
+.workout-block.rest { border-left: 3px solid var(--blue); }
+.workout-block.completed::after {
+  content: "✓";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--green);
+  color: #000;
+  width: 22px; height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.wb-header { padding: 14px 16px 12px; }
+.workout-time {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+.workout-name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+.workout-desc {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 10px 0 0;
+}
+.workout-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: var(--surface-3);
+  border: 1px solid var(--border-bright);
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  white-space: nowrap;
+}
+.tag.zone-z1 { border-color: var(--gray); color: var(--gray); }
+.tag.zone-z2 { border-color: var(--green); color: var(--green); }
+.tag.zone-z3 { border-color: var(--blue); color: var(--blue); }
+.tag.zone-z4 { border-color: var(--orange); color: var(--orange); }
+.tag.zone-z5 { border-color: var(--red); color: var(--red); }
+.tag.yellow { background: var(--yellow); color: #000; border-color: var(--yellow); font-weight: 700; }
+
+.run-segments { padding: 0 16px 14px; }
+.run-seg {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px dashed var(--border);
+  align-items: start;
+}
+.run-seg-time {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
+  text-align: center;
+}
+.run-seg-time small {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+}
+.run-seg-body { font-size: 13px; line-height: 1.55; }
+.run-seg-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--yellow);
+  margin-bottom: 4px;
+}
+.run-seg-title.warmup { color: var(--blue); }
+.run-seg-title.cooldown { color: var(--gray); }
+.run-seg-extra {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.warmup-routine-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border: 1px dashed var(--border-bright);
+  color: var(--text);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  text-align: center;
+}
+.warmup-routine-btn:hover { border-color: var(--yellow-dim); color: var(--yellow); }
+
+.strength-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--yellow);
+  margin-bottom: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.strength-card.completed::after {
+  content: "✓";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--green);
+  color: #000;
+  width: 22px; height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.strength-header {
+  background: linear-gradient(135deg, rgba(255,213,0,0.06), transparent);
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.strength-name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+.strength-when {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.strength-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.strength-ex-row {
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  cursor: pointer;
+  transition: background .15s;
+}
+.strength-ex-row:last-of-type { border-bottom: none; }
+.strength-ex-row:hover { background: var(--surface-2); }
+.strength-ex-num {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--text-dim);
+  text-align: center;
+}
+.strength-ex-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+}
+.strength-ex-hint {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+}
+.strength-ex-sets {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--yellow);
+  text-align: right;
+  line-height: 1;
+  white-space: nowrap;
+}
+.strength-ex-sets small {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+}
+.strength-footer {
+  padding: 10px 16px;
+  background: var(--surface-2);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-top: 1px solid var(--border);
+}
+
+.actions-section {
+  padding: 12px 16px 16px;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+}
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.action-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 6px;
+  color: var(--text);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all .15s;
+}
+.action-btn:active { transform: scale(0.97); }
+.action-btn.done.active { background: var(--green); color: #000; border-color: var(--green); }
+.action-btn.partial.active { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.action-btn.skipped.active { background: var(--surface-3); color: var(--text-muted); border-color: var(--border-bright); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--yellow);
+  border: 1px solid var(--yellow);
+  color: #000;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.btn.full { width: 100%; }
+.btn.compact { padding: 8px 14px; font-size: 11px; }
+
+.log-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+.log-form label { display: flex; flex-direction: column; gap: 3px; }
+.lbl-text {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.log-form input, .log-form select, .log-form textarea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  border-radius: 0;
+}
+.log-form input:focus, .log-form textarea:focus { outline: none; border-color: var(--yellow); }
+.log-form textarea { grid-column: span 2; min-height: 60px; resize: vertical; font-family: var(--body); }
+.log-form .full { grid-column: span 2; }
+
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.week-day {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 8px 4px 10px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.week-day .dow {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.week-day .date-num {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.1;
+  margin: 1px 0 4px;
+}
+.week-day .ico {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.week-day.today { background: var(--surface-2); border-color: var(--yellow); }
+.week-day.today .dow, .week-day.today .date-num { color: var(--yellow); }
+.week-day.done .ico { color: var(--green); }
+.week-day.skipped { opacity: 0.4; }
+.week-day.partial .ico { color: var(--yellow); }
+.week-day.rest-day { background: rgba(96, 165, 250, 0.08); border-color: var(--blue); }
+.week-day.rest-day .ico { color: var(--blue); }
+.week-day.selected { background: var(--surface-2); border-color: var(--yellow); }
+.week-day .status-dot {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.week-day.done .status-dot { background: var(--green); }
+.week-day.skipped .status-dot { background: var(--text-dim); }
+.week-day.partial .status-dot { background: var(--yellow); }
+.week-day.rest-day .status-dot { background: var(--blue); }
+
+.week-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 10px;
+}
+.week-nav-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.week-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.week-nav-label {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.week-nav-label .phase-tag {
+  display: block;
+  font-size: 10px;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+.cycle-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  margin-bottom: 18px;
+}
+.cycle-week {
+  aspect-ratio: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: var(--display);
+  font-weight: 700;
+}
+.cycle-week.phase-1 { background: rgba(74, 222, 128, 0.06); border-color: rgba(74, 222, 128, 0.25); }
+.cycle-week.phase-2 { background: rgba(96, 165, 250, 0.06); border-color: rgba(96, 165, 250, 0.25); }
+.cycle-week.phase-3 { background: rgba(251, 146, 60, 0.06); border-color: rgba(251, 146, 60, 0.25); }
+.cycle-week.phase-4 { background: rgba(239, 68, 68, 0.06); border-color: rgba(239, 68, 68, 0.25); }
+.cycle-week.current { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.cycle-week.race { background: var(--red); color: #fff; border-color: var(--red); }
+.cycle-week .wn { font-size: 14px; line-height: 1; }
+.cycle-week .ph { font-size: 8px; opacity: 0.7; margin-top: 1px; font-weight: 500; }
+
+.phase-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0 8px; }
+.phase-card { background: var(--surface); border-left: 3px solid var(--gray); padding: 12px; }
+.phase-card.p1 { border-left-color: var(--green); }
+.phase-card.p2 { border-left-color: var(--blue); }
+.phase-card.p3 { border-left-color: var(--orange); }
+.phase-card.p4 { border-left-color: var(--red); }
+.phase-card .pname { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 0.05em; margin-bottom: 3px; }
+.phase-card .pmeta { font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.exercise-filter { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+.filter-btn.active { background: var(--yellow); color: #000; border-color: var(--yellow); }
+
+.exercise-card { background: var(--surface); border: 1px solid var(--border); padding: 14px 16px; margin-bottom: 10px; }
+.ex-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.ex-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.03em; line-height: 1.15; }
+.ex-cat { font-family: var(--mono); font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 7px; border: 1px solid var(--border); }
+.ex-cue { font-size: 13px; color: var(--text); line-height: 1.5; margin: 8px 0; }
+.ex-progression { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 10px; }
+.ex-prog-cell { background: var(--surface-2); border: 1px solid var(--border); padding: 6px 4px; text-align: center; }
+.ph-name { font-family: var(--mono); font-size: 8px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.ph-val { font-family: var(--display); font-weight: 700; font-size: 11px; margin-top: 2px; }
+.ex-sub { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+.ex-sub strong { color: var(--yellow); font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: 0.08em; }
+
+.sub-grid { display: grid; gap: 10px; }
+.sub-card { background: var(--surface); border: 1px solid var(--border); padding: 14px 16px; cursor: pointer; }
+.sub-card:hover { border-color: var(--yellow-dim); }
+.sub-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+.sub-from { font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.sub-arrow { color: var(--yellow); font-weight: 700; }
+.sub-title { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.03em; line-height: 1.15; margin-bottom: 4px; }
+.sub-desc { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: none; align-items: flex-end; justify-content: center; padding: 20px; }
+.modal-backdrop.active { display: flex; }
+.modal { background: var(--surface-2); border: 1px solid var(--border-bright); border-top: 2px solid var(--yellow); width: 100%; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 22px 20px; position: relative; animation: slideUp .25s ease; }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-close { position: absolute; top: 14px; right: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 28px; height: 28px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.modal-title { font-family: var(--display); font-weight: 900; font-size: 24px; text-transform: uppercase; line-height: 1; margin-bottom: 4px; padding-right: 40px; }
+.modal-sub { font-family: var(--mono); font-size: 11px; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+.modal-content { font-size: 14px; line-height: 1.6; }
+.modal-content h4 { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 0.05em; margin: 14px 0 6px; color: var(--yellow); }
+.modal-content ul, .modal-content ol { padding-left: 20px; margin-bottom: 8px; }
+.modal-content li { margin-bottom: 4px; }
+.modal-content table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12.5px; }
+.modal-content th, .modal-content td { border-bottom: 1px solid var(--border); padding: 8px 6px; text-align: left; }
+.modal-content th { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; color: var(--yellow); }
+
+.warmup-step {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+  align-items: center;
+}
+.warmup-step-num {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--text-dim);
+  text-align: center;
+}
+.warmup-step-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.warmup-step-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.warmup-step-time {
+  font-family: var(--display);
+  font-weight: 800;
+  color: var(--yellow);
+  font-size: 14px;
+}
+
+.zone-list { display: grid; gap: 8px; }
+.zone-row { background: var(--surface); border: 1px solid var(--border); border-left-width: 4px; padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; }
+.zone-row.z1 { border-left-color: var(--gray); }
+.zone-row.z2 { border-left-color: var(--green); }
+.zone-row.z3 { border-left-color: var(--blue); }
+.zone-row.z4 { border-left-color: var(--orange); }
+.zone-row.z5 { border-left-color: var(--red); }
+.zone-name { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: 0.03em; }
+.zone-row.z1 .zone-name { color: var(--gray); }
+.zone-row.z2 .zone-name { color: var(--green); }
+.zone-row.z3 .zone-name { color: var(--blue); }
+.zone-row.z4 .zone-name { color: var(--orange); }
+.zone-row.z5 .zone-name { color: var(--red); }
+.zone-label-row { font-family: var(--display); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+.zone-data { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
+.zone-data .yellow { color: var(--yellow); }
+
+.checkin-form { display: grid; gap: 12px; }
+.checkin-form label { display: grid; gap: 4px; }
+.checkin-form .lbl { font-family: var(--display); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+.lbl-hint { font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: -2px; }
+.checkin-form input, .checkin-form textarea, .checkin-form select { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 10px 12px; font-family: var(--body); font-size: 14px; border-radius: 0; }
+.checkin-form textarea { min-height: 60px; resize: vertical; }
+.scale-row { display: grid; gap: 3px; }
+.scale-btn { aspect-ratio: 1; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-family: var(--display); font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.scale-btn.active { background: var(--yellow); color: #000; border-color: var(--yellow); }
+
+.race-preset-bar { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--yellow); padding: 10px 12px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.race-preset-bar .info { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.race-preset-bar .info strong { color: var(--text); font-family: var(--display); font-weight: 800; font-size: 13px; display: block; margin-top: 1px; letter-spacing: 0.04em; }
+.race-preset-bar input[type="date"] { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 6px 8px; font-family: var(--mono); font-size: 12px; color-scheme: dark; }
+
+.empty-msg { text-align: center; padding: 40px 20px; color: var(--text-muted); font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.toast { position: fixed; bottom: calc(90px + env(safe-area-inset-bottom, 0)); left: 50%; transform: translateX(-50%); background: var(--yellow); color: #000; padding: 10px 18px; font-family: var(--display); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; z-index: 250; pointer-events: none; opacity: 0; transition: opacity .25s, transform .25s; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.stat-block { background: var(--surface); border: 1px solid var(--border); padding: 12px; }
+.stat-label { font-family: var(--mono); font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; }
+.stat-value { font-family: var(--display); font-weight: 800; font-size: 22px; margin-top: 4px; letter-spacing: 0.02em; line-height: 1; }
+.stat-unit { font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+.rest-action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.rest-btn { background: var(--surface-2); border: 1px dashed var(--blue); color: var(--blue); padding: 12px 10px; font-family: var(--display); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; }
+.rest-btn.active { background: rgba(96,165,250,0.15); border-style: solid; }
+
+@media (min-width: 600px) {
+  h1.page-title { font-size: 48px; }
+  .week-day { min-height: 80px; padding: 10px 4px 12px; }
+  .week-day .date-num { font-size: 22px; }
+  nav.tabs button { font-size: 11px; }
+}
+
+/* ── PLANNER ── */
+.planner-step { background: var(--surface); border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; }
+.planner-step-header { font-family: var(--display); font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--yellow); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.planner-step-header .step-num { background: var(--yellow); color: #000; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.day-toggle-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.day-toggle { border: 1px solid var(--border); background: var(--surface-2); padding: 8px 4px; text-align: center; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); user-select: none; }
+.day-toggle.active { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.stepper-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stepper-item { background: var(--surface-2); border: 1px solid var(--border); padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.stepper-label { font-family: var(--display); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.03em; }
+.stepper-ctrl { display: flex; align-items: center; gap: 8px; }
+.stepper-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 26px; height: 26px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.stepper-val { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--yellow); min-width: 20px; text-align: center; }
+.condition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.condition-item { display: flex; flex-direction: column; gap: 5px; }
+.condition-label { font-family: var(--mono); font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.condition-val { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--yellow); text-align: center; }
+.condition-item input[type=range] { width: 100%; accent-color: var(--yellow); }
+
+.risk-week { display: grid; gap: 6px; margin-top: 14px; }
+.risk-day { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--gray); padding: 10px 12px; display: grid; grid-template-columns: 60px 1fr auto; gap: 10px; align-items: start; }
+.risk-day.risk-low { border-left-color: var(--green); }
+.risk-day.risk-mid { border-left-color: var(--orange); }
+.risk-day.risk-high { border-left-color: var(--red); }
+.risk-day.risk-rest { border-left-color: var(--blue); background: rgba(96,165,250,0.05); }
+.risk-dow { font-family: var(--display); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.risk-date { font-family: var(--mono); font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+.risk-sessions { display: flex; flex-direction: column; gap: 3px; }
+.risk-session-name { font-family: var(--display); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+.risk-session-hint { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+.risk-badge { font-family: var(--display); font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 7px; white-space: nowrap; }
+.risk-badge.low { background: rgba(74,222,128,0.15); color: var(--green); }
+.risk-badge.mid { background: rgba(251,146,60,0.15); color: var(--orange); }
+.risk-badge.high { background: rgba(239,68,68,0.15); color: var(--red); }
+.risk-badge.rest { background: rgba(96,165,250,0.15); color: var(--blue); }
+.risk-conflicts { margin-top: 4px; font-size: 11px; color: var(--orange); line-height: 1.4; }
+
+/* ── EXPORT/IMPORT ── */
+.data-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.data-btn { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 12px 10px; font-family: var(--display); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; text-align: center; }
+.data-btn:hover { border-color: var(--yellow-dim); color: var(--yellow); }
+.data-btn.danger-btn { border-color: var(--red); color: var(--red); }
+.data-btn.danger-btn:hover { background: rgba(239,68,68,0.1); }
+
+/* ── BRICKS ── */
+.brick-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--orange); padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+.brick-card:hover { border-left-color: var(--yellow); }
+.brick-phase { font-family: var(--mono); font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; }
+.brick-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.03em; margin-bottom: 4px; }
+.brick-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-mark">BRUNO<span class="slash">/</span><span class="yellow">HYROX</span><span class="slash">/</span>SP'26</div>
+    <div class="race-counter">
+      <span class="num" id="daysToRace">—</span>
+      DIAS
+    </div>
+  </div>
+  <div class="phase-bar" id="phaseBar"></div>
+</header>
+
+<main>
+
+<section class="tab-content active" id="tab-hoje">
+  <div class="dashboard" id="dashboard"></div>
+
+  <div class="today-hero">
+    <div class="today-tag"><span class="dot"></span><span id="todayPhaseName">—</span> · SEMANA <span id="todayWeekNum">—</span></div>
+    <div class="today-date" id="todayDateStr">—</div>
+    <div class="today-meta" id="todayMetaStr">—</div>
+  </div>
+
+  <div id="todayWorkouts"></div>
+
+  <div class="rest-action-row">
+    <button class="rest-btn" id="restDayBtn" onclick="toggleRestDay()">☾ MARCAR HOJE COMO DESCANSO</button>
+    <button class="rest-btn" onclick="goTab('substituir')">↔ SUBSTITUIR TREINO</button>
+  </div>
+
+  <h2 class="section-title">Próximo</h2>
+  <div id="tomorrowWorkouts"></div>
+</section>
+
+<section class="tab-content" id="tab-semana">
+  <h1 class="page-title">SE<span class="accent">MA</span>NA</h1>
+  <div class="page-subtitle">Visão dos 7 dias</div>
+
+  <div class="week-nav">
+    <button class="week-nav-btn" id="weekPrev">← ANT</button>
+    <div class="week-nav-label" id="weekNavLabel">SEMANA 1<span class="phase-tag">FUNDAÇÃO</span></div>
+    <button class="week-nav-btn" id="weekNext">PRÓX →</button>
+  </div>
+
+  <div class="week-strip" id="weekStrip"></div>
+  <div id="weekDayDetail"></div>
+</section>
+
+<section class="tab-content" id="tab-ciclo">
+  <h1 class="page-title">CI<span class="accent">CLO</span></h1>
+  <div class="page-subtitle">24 semanas / 4 fases / Prova 17 OUT</div>
+
+  <div class="race-preset-bar">
+    <div class="info">DATA DA PROVA<strong id="racePresetLabel">—</strong></div>
+    <input type="date" id="raceDateInput">
+  </div>
+
+  <div class="cycle-grid" id="cycleGrid"></div>
+
+  <h2 class="section-title">Fases</h2>
+  <div class="phase-summary">
+    <div class="phase-card p1">
+      <div class="pname">F1 — Fundação</div>
+      <div class="pmeta">Sem 1–5 · 15–22 km/sem</div>
+      <p style="font-size: 12.5px; margin-top: 6px; line-height: 1.5; color: var(--text-muted);">Base aeróbica Z2, adaptação tendínea</p>
+    </div>
+    <div class="phase-card p2">
+      <div class="pname">F2 — Construção</div>
+      <div class="pmeta">Sem 6–14 · 25–35 km/sem</div>
+      <p style="font-size: 12.5px; margin-top: 6px; line-height: 1.5; color: var(--text-muted);">Limiar Z3/Z4, força máxima</p>
+    </div>
+    <div class="phase-card p3">
+      <div class="pname">F3 — Específico</div>
+      <div class="pmeta">Sem 15–21 · 30–40 km/sem</div>
+      <p style="font-size: 12.5px; margin-top: 6px; line-height: 1.5; color: var(--text-muted);">Intervalos Z4, simulações Hyrox</p>
+    </div>
+    <div class="phase-card p4">
+      <div class="pname">F4 — Taper</div>
+      <div class="pmeta">Sem 22–24 · 12–20 km/sem</div>
+      <p style="font-size: 12.5px; margin-top: 6px; line-height: 1.5; color: var(--text-muted);">Recuperação, ativação</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Instalar no celular</h2>
+  <div class="card">
+    <p style="font-size: 13.5px; line-height: 1.7; margin-bottom: 12px;">Para usar como app no celular sem precisar abrir o arquivo toda vez:</p>
+    <h4 style="font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.06em; color: var(--yellow); margin-bottom: 6px;">iPhone / Safari (via GitHub Pages)</h4>
+    <ol style="padding-left: 20px; font-size: 13px; line-height: 1.7; color: var(--text-muted); margin-bottom: 14px;">
+      <li>Abrir a URL do GitHub Pages no <strong style="color: var(--text);">Safari</strong></li>
+      <li>Botão compartilhar (quadrado com seta) → <strong style="color: var(--text);">Adicionar à Tela de Início</strong></li>
+      <li>Toque em "Adicionar" — instala como app com ícone</li>
+    </ol>
+    <div class="divider"></div>
+    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">💾 Todos os dados ficam salvos no navegador — funciona offline. Use Export/Import para backup.</p>
+  </div>
+
+  <h2 class="section-title">Dados e backup</h2>
+  <div class="card">
+    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">Exporte todos os seus dados (treinos marcados, anotações, planos) como JSON. Importe para restaurar ou migrar para outro celular.</p>
+    <div class="data-btns">
+      <button class="data-btn" onclick="exportData()">⬇ EXPORTAR JSON</button>
+      <label class="data-btn" style="cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        ⬆ IMPORTAR JSON
+        <input type="file" accept=".json" style="display:none;" onchange="importData(this)">
+      </label>
+    </div>
+    <button class="data-btn danger-btn" onclick="confirmResetData()" style="width: 100%; margin-top: 6px;">⚠ APAGAR TODOS OS DADOS</button>
+  </div>
+
+  <h2 class="section-title">Zonas de FC</h2>
+  <div class="stat-grid" style="margin-bottom: 12px;">
+    <div class="stat-block"><div class="stat-label">FCmáx</div><div class="stat-value">190</div><div class="stat-unit">BPM</div></div>
+    <div class="stat-block"><div class="stat-label">VO₂ MÁX</div><div class="stat-value">48</div><div class="stat-unit">ML/KG/MIN</div></div>
+    <div class="stat-block"><div class="stat-label">PACE ATUAL</div><div class="stat-value">5:20</div><div class="stat-unit">/KM</div></div>
+    <div class="stat-block"><div class="stat-label">PACE ALVO</div><div class="stat-value">4:45</div><div class="stat-unit">/KM PROVA</div></div>
+  </div>
+  <div class="zone-list" id="zoneList"></div>
+  <div class="card" style="margin-top: 12px;">
+    <p style="font-size: 13.5px; line-height: 1.6;">No Zepp: <strong>Perfil → Saúde → FC → Zonas → Personalizar</strong>. Limites superiores: <strong>113, 132, 151, 171</strong>. FCmáx: <strong>190 bpm</strong>.</p>
+    <div class="divider"></div>
+    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">Sessões Z2: ative alerta em 132 bpm. Intervaladas: desative alertas.</p>
+  </div>
+</section>
+
+
+<section class="tab-content" id="tab-substituir">
+  <h1 class="page-title">SUBSTI<span class="accent">TUIR</span></h1>
+  <div class="page-subtitle">Adapte sem perder o ciclo</div>
+
+  <h2 class="section-title">Bricks HYROX específicos</h2>
+  <div id="bricksGrid"></div>
+
+  <h2 class="section-title">Trocar por musculação</h2>
+  <div class="sub-grid" id="muscSubGrid"></div>
+
+  <h2 class="section-title">Trocar entre modalidades</h2>
+  <div class="sub-grid" id="modalSubGrid"></div>
+
+  <h2 class="section-title">Condições especiais</h2>
+  <div class="sub-grid" id="conditionSubGrid"></div>
+</section>
+
+<section class="tab-content" id="tab-planejar">
+  <h1 class="page-title">PLA<span class="accent">NEJAR</span></h1>
+  <div class="page-subtitle">Monte a semana real · motor adaptativo</div>
+
+  <div id="plannerWeekInfo" style="font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;"></div>
+
+  <div class="planner-step">
+    <div class="planner-step-header"><span class="step-num">1</span> Dias disponíveis esta semana</div>
+    <div class="day-toggle-grid" id="plannerDayToggles"></div>
+  </div>
+
+  <div class="planner-step">
+    <div class="planner-step-header"><span class="step-num">2</span> Quantas sessões desejo fazer</div>
+    <div class="stepper-grid" id="plannerSteppers"></div>
+  </div>
+
+  <div class="planner-step">
+    <div class="planner-step-header"><span class="step-num">3</span> Como estou hoje</div>
+    <div class="condition-grid" id="plannerCondition"></div>
+  </div>
+
+  <button class="btn full" onclick="generateAdaptiveWeek()" style="margin-bottom: 14px;">⚡ GERAR SEMANA ADAPTATIVA</button>
+
+  <div id="plannerResult"></div>
+</section>
+
+<section class="tab-content" id="tab-checkin">
+  <h1 class="page-title">CHECK-<span class="accent">IN</span></h1>
+  <div class="page-subtitle">Final de semana · gera resumo</div>
+
+  <form class="checkin-form" id="checkinForm" onsubmit="return false;">
+    <label>
+      <span class="lbl">Semana</span>
+      <select id="ci_week"></select>
+    </label>
+    <label>
+      <span class="lbl">Sessões de corrida concluídas</span>
+      <input type="number" id="ci_runs_done" min="0" max="5" placeholder="0">
+    </label>
+    <label>
+      <span class="lbl">Sessões puladas (motivo)</span>
+      <textarea id="ci_runs_skipped" placeholder="Ex: domingo (cansaço), quarta (chuva)..."></textarea>
+    </label>
+    <label>
+      <span class="lbl">FC média / Pace médio (Z2)</span>
+      <input type="text" id="ci_z2_data" placeholder="Ex: FC 124 / pace 6:10">
+    </label>
+    <label>
+      <span class="lbl">Musculação concluída</span>
+      <input type="text" id="ci_strength" placeholder="2/2, 1/2, etc.">
+    </label>
+    <label>
+      <span class="lbl">Nordic Curl - evolução</span>
+      <input type="text" id="ci_nordic" placeholder="Ex: 4 reps c/ 4s descida">
+    </label>
+    <label>
+      <span class="lbl">Epicondilite (0-10)</span>
+      <span class="lbl-hint">0 = sem dor, 10 = dor máxima</span>
+      <div class="scale-row" id="ci_pain_scale"></div>
+    </label>
+    <label>
+      <span class="lbl">Energia geral / sono (1-10)</span>
+      <div class="scale-row" id="ci_energy_scale"></div>
+    </label>
+    <label>
+      <span class="lbl">NXT House - sensação</span>
+      <textarea id="ci_nxt" placeholder="Como foi o treino de sábado?"></textarea>
+    </label>
+    <label>
+      <span class="lbl">Observações livres</span>
+      <textarea id="ci_notes" placeholder="Qualquer coisa relevante: lesões, vitórias, dúvidas..."></textarea>
+    </label>
+    <button type="button" class="btn full" onclick="generateCheckin()">GERAR RESUMO PARA ENVIAR</button>
+  </form>
+
+  <div id="checkinOutput" style="margin-top: 16px;"></div>
+</section>
+
+</main>
+
+<nav class="tabs">
+<nav class="tabs">
+  <button data-tab="hoje" class="active">HOJE</button>
+  <button data-tab="semana">SEMANA</button>
+  <button data-tab="ciclo">CICLO</button>
+  <button data-tab="planejar">PLANEJAR</button>
+  <button data-tab="substituir">SUBST.</button>
+  <button data-tab="checkin">CHECK-IN</button>
+</nav>
+
+<div class="modal-backdrop" id="modal" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-title" id="modalTitle">—</div>
+    <div class="modal-sub" id="modalSub"></div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">SALVO</div>
+
+<script>
+const PLAN = {
+  startDate: '2026-05-04',
+  defaultRaceDate: '2026-10-17',
+  hrMax: 190,
+  zones: [
+    { id: 'z1', name: 'Z1', label: 'Recuperação', hrLow: 0, hrHigh: 113, pace: '> 6:30', sense: 'Muito fácil, fala sem esforço' },
+    { id: 'z2', name: 'Z2', label: 'Base aeróbica', hrLow: 114, hrHigh: 132, pace: '5:50–6:30', sense: 'Fácil, fala em frases' },
+    { id: 'z3', name: 'Z3', label: 'Tempo', hrLow: 133, hrHigh: 151, pace: '5:10–5:49', sense: 'Moderado, fala curta' },
+    { id: 'z4', name: 'Z4', label: 'Limiar', hrLow: 152, hrHigh: 171, pace: '4:35–5:09', sense: 'Difícil, só palavras' },
+    { id: 'z5', name: 'Z5', label: 'VO₂ máx', hrLow: 172, hrHigh: 190, pace: '< 4:35', sense: 'Máximo, sem fala' },
+  ],
+  phases: [
+    { id: 1, name: 'Fundação', short: 'F1', startWeek: 1, endWeek: 5 },
+    { id: 2, name: 'Construção', short: 'F2', startWeek: 6, endWeek: 14 },
+    { id: 3, name: 'Específico', short: 'F3', startWeek: 15, endWeek: 21 },
+    { id: 4, name: 'Taper', short: 'F4', startWeek: 22, endWeek: 24 },
+  ],
+};
+
+const WARMUP_ROUTINE = [
+  { name: 'Marcha alta no lugar', time: '30s', desc: 'Joelhos altos, ritmo conversacional. Ativa flexores do quadril.' },
+  { name: 'Calf raises dinâmicos', time: '20s', desc: 'Subir nas pontas dos pés, descer. Ativa panturrilha e prepara tornozelo.' },
+  { name: 'Leg swings frontal', time: '10x cada', desc: 'Apoio em algo. Balançar perna pra frente e trás, amplitude crescente.' },
+  { name: 'Leg swings lateral', time: '10x cada', desc: 'Balançar perna lateralmente cruzando à frente do corpo. Abdutores e adutores.' },
+  { name: 'Skipping baixo', time: '30s', desc: 'Pequenos saltos alternando pés, pés baixos. Ativa neuromuscular.' },
+  { name: 'Trote no lugar', time: '30s', desc: 'Trote leve, sem sair do lugar. Eleva FC para Z1 antes de começar.' },
+];
+
+const RUN_PROGRESSION = {
+  1: { A: [20, 23, 26, 28, 22], B: [28, 32, 35, 38, 28], C: [20, 22, 22, 25, 20] },
+  2: {
+    A: [30, 32, 32, 35, 35, 38, 38, 35, 35],
+    B: [35, 30, 30, 35, 35, 40, 40, 45, 45],
+    BType: ['Z2 contínuo', '15min Z3 no centro', '15min Z3 no centro', '20min Z3', '20min Z3', '4×5min Z4', '4×5min Z4', '5×5min Z4', '5×5min Z4'],
+    F: [null, null, null, '8×20s strides', '8×20s strides', '10×20s strides', '10×20s strides', '10×20s strides', '10×20s strides'],
+    C: [28, 30, 30, 30, 30, 32, 32, 35, 35]
+  },
+  3: {
+    A: [35, 35, 35, 35, 30, 30, 30],
+    B: ['6×1km Z4 c/ 2min rec', '6×1km Z4 c/ 2min rec', '7×1km Z4 c/ 90s rec', '7×1km Z4 c/ 90s rec', '5×1km Z4 + 2×500m Z5', '5×1km Z4 + 2×500m Z5', 'Brick: 2×(2km+estação)'],
+    F: [20, 20, 20, 20, 20, 20, 20],
+    C: ['6km Z2', '6km Z2', '7km Z2/Z3', '7km Z2/Z3', '8km Z2/Z3', '8km Z2/Z3', '8km Z2']
+  },
+  4: {
+    A: [30, 25, 20],
+    B: ['3×1km Z4 (curto)', '20min Z2', '15min Z1 (ativação)'],
+    C: [25, 20, 0],
+  }
+};
+
+const STRENGTH_WORKOUTS = {
+  A: {
+    name: 'Sessão A',
+    focus: 'Glúteo + Core anti-rotação',
+    duration: '28–32 min',
+    rest: '60s entre séries',
+    tags: [{ text: 'GLÚTEO', cls: '' }, { text: 'CORE', cls: '' }, { text: '~30 MIN', cls: '' }],
+    exercises: {
+      1: [
+        { num: 1, name: 'Hip Thrust', sets: '3×10', hint: 'PC ou barra vazia · 2s subida, 1s pausa, 2s descida', cue: 'Espalda no banco, barra no quadril. Quadril paralelo ao chão no topo — não hiperextender lombar. +5 kg/sem a partir da sem 3.' },
+        { num: 2, name: 'RDL Unilateral', sets: '3×8', hint: 'Halteres 8-10 kg · cada perna', cue: 'Haltere na mão oposta à perna de apoio. Inclinar mantendo costas neutras, perna livre sobe como contrapeso. Controle total sem oscilar.' },
+        { num: 3, name: 'Pallof Press', sets: '3×10', hint: 'Cabo 5-8 kg · cada lado', cue: 'Lateral ao cabo, segurar na altura do peito. Empurrar até esticar, 2s, retornar. Núcleo resiste à rotação.' },
+        { num: 4, name: 'Dead Bug', sets: '3×5', hint: 'Sem carga · cada lado · 4s/rep', cue: 'Deitado, braços para cima, 90°. Abaixar braço + perna opostos quase tocando o chão, lombar colada. Sem 3+: haltere 2kg.' },
+      ],
+      2: [
+        { num: 1, name: 'Hip Thrust', sets: '4×8-10', hint: '60-80 kg · pausa 2s no topo', cue: 'Carga progressiva semanal. Manter técnica antes de avançar peso.' },
+        { num: 2, name: 'RDL Unilateral', sets: '3×8-10', hint: 'Halteres 12-16 kg · cada perna', cue: 'Maior carga, foco em controle. Pode adicionar pausa de 1s na descida máxima.' },
+        { num: 3, name: 'Pallof Press', sets: '3×10', hint: 'Cabo 8-12 kg · cada lado', cue: 'Aumentar carga quando não houver rotação no tronco.' },
+        { num: 4, name: "Farmer's Carry", sets: '3×20m', hint: 'Halteres 16-20 kg · substitui Dead Bug', cue: 'Andar com peso, coluna ereta, ombros para trás. Anti-rotação sob carga dinâmica.' },
+      ],
+      3: [
+        { num: 1, name: 'Hip Thrust', sets: '3×8', hint: 'Velocidade máxima na subida', cue: 'Foco em potência. Carga moderada, subida explosiva, descida controlada 2s.' },
+        { num: 2, name: 'Bulgarian Split Squat', sets: '4×8', hint: 'Halteres 10-12 kg · cada perna', cue: 'Pé traseiro no banco. Descer controlado 3s. Substitui RDL nesta fase.' },
+        { num: 3, name: 'Pallof Press', sets: '3×10', hint: 'Cabo · cada lado', cue: 'Manter padrão da F2.' },
+        { num: 4, name: "Farmer's Carry", sets: '3×20m', hint: 'Mais rápido · mantendo postura', cue: 'Foco em velocidade. Completar 20m mais rápido que antes.' },
+      ],
+      4: [
+        { num: 1, name: 'Hip Thrust', sets: '2×8', hint: '-30% carga · apenas ativação', cue: 'Ativação neural, sem fadiga.' },
+        { num: 2, name: 'Bulgarian Split Squat', sets: '2×6', hint: 'Sem carga ou leve', cue: 'Manter padrão motor.' },
+        { num: 3, name: 'Pallof Press', sets: '2×8', hint: 'Carga reduzida', cue: 'Apenas para manter ativação do core.' },
+      ],
+    }
+  },
+  B: {
+    name: 'Sessão B',
+    focus: 'Posterior + Tornozelo + Epicondilite',
+    duration: '28–32 min',
+    rest: '60–90s entre séries',
+    tags: [{ text: 'POSTERIOR', cls: '' }, { text: 'AQUILES', cls: '' }, { text: 'COTOVELO', cls: '' }],
+    exercises: {
+      1: [
+        { num: 1, name: 'Nordic Curl', sets: '3×4', hint: 'Excêntrico · descida 3-4s', cue: 'O exercício mais importante para prevenir lesão de isquio. Joelhos no chão, tornozelos fixos. Cair pra frente controlando — usar mãos pra amortecer. Sem 1-2: descida 3s. Sem 3+: descida 4s.' },
+        { num: 2, name: 'Calf Raise excêntrico', sets: '3×10', hint: 'PC · unilateral · 4-5s descida', cue: 'No step. Subir com dois pés, descer com um em 4-5s. Amplitude total. Protege Aquiles.' },
+        { num: 3, name: 'Tibial Raise', sets: '3×20', hint: 'PC · costas na parede', cue: 'Calcanhares 20cm afastados. Levantar pontas dos pés, pausar 1s. Previne canelite.' },
+        { num: 4, name: 'Step-up + joelho', sets: '3×8', hint: 'PC · cada perna · step 40-50cm', cue: 'Subir e trazer joelho oposto ao peito. Descer controlado. Padrão motor de corrida.' },
+        { num: 5, name: 'Wrist Curl excêntrico', sets: '2×15', hint: 'Haltere 1-2 kg · epicondilite', cue: 'Antebraço na coxa, palma para cima. Subir com 2 dedos, descer com lado afetado em 4-5s. Parar se dor >4/10.' },
+      ],
+      2: [
+        { num: 1, name: 'Nordic Curl', sets: '3×6', hint: 'Descida 4-5s · sem 7+: tentar concêntrico', cue: 'Progressão para 6 reps. A partir da semana 7 da fase, tentar 1ª rep sem ajuda das mãos.' },
+        { num: 2, name: 'Calf Raise carregado', sets: '3×12', hint: 'Mochila 3-5 kg · unilateral', cue: 'Adicionar carga. Manter descida 4-5s.' },
+        { num: 3, name: 'Tibial Raise', sets: '3×15', hint: 'Com band de resistência', cue: 'Adicionar resistência. Pausar 1s no topo.' },
+        { num: 4, name: 'Bulgarian Split Squat', sets: '4×8', hint: 'Halteres 10-12 kg · cada perna', cue: 'Substitui Step-up. Pé traseiro no banco. Descer 3s, joelho dianteiro não passa do pé.' },
+        { num: 5, name: 'Wrist Curl excêntrico', sets: '2×15', hint: 'Carga progressiva 2-3 kg', cue: 'Aumentar carga somente quando 15 reps ficarem sem desconforto.' },
+      ],
+      3: [
+        { num: 1, name: 'Nordic Curl', sets: '3×5 + 2×3', hint: 'Excêntrico + unilateral final', cue: '3 séries excêntricas + 2 séries unilaterais de 3 reps. Demanda alta.' },
+        { num: 2, name: 'Calf Raise', sets: '2×10', hint: 'Mantém · sem volume extra', cue: 'Apenas ativação. Volume já está no NXT House.' },
+        { num: 3, name: 'Tibial Raise', sets: '2×15', hint: 'Mantém', cue: 'Manutenção.' },
+        { num: 4, name: 'Bulgarian + Box Jump', sets: '4×6 + 2×5', hint: 'Force-velocidade', cue: 'Após cada série de Bulgarian, 5 box jumps unilaterais (salto subindo no step). Conversão força-potência.' },
+        { num: 5, name: 'Wrist Curl', sets: '1×15 ou eliminar', hint: 'Se já reabilitado, eliminar', cue: 'Manter apenas se ainda houver sintomas.' },
+      ],
+      4: [
+        { num: 1, name: 'Nordic Curl', sets: '1×4', hint: 'Manutenção', cue: 'Volume mínimo para manter adaptação. Sem fadiga.' },
+        { num: 2, name: 'Calf Raise', sets: '1×10', hint: 'Leve', cue: 'Ativação.' },
+        { num: 3, name: 'Tibial Raise', sets: '1×15', hint: 'Manutenção', cue: '' },
+        { num: 4, name: 'Bulgarian Split Squat', sets: '2×6', hint: 'Sem carga', cue: 'Apenas padrão motor.' },
+      ],
+    }
+  }
+};
+
+const EXERCISES = [
+  { id: 'hip-thrust', name: 'Hip Thrust', cat: 'Sessão A · Glúteo', cue: 'Espalda no banco, barra no quadril. 2s subida, 1s pausa no topo, 2s descida. Quadril paralelo ao chão.', progression: { f1: 'PC / barra · 3×10', f2: '60-80 kg · 4×8-10', f3: 'Explosivo · 3×8', f4: '-30% · 2×8' }, sub: 'Sem banco/barra: Glute Bridge no chão com haltere/anilha no quadril. Sem nada: Glute Bridge unilateral 3×12 cada.', phases: [1,2,3,4] },
+  { id: 'rdl-uni', name: 'RDL Unilateral', cat: 'Sessão A · Posterior', cue: 'Haltere na mão oposta à perna de apoio. Inclinar mantendo costas neutras, perna livre sobe como contrapeso.', progression: { f1: 'Haltere 8-10 kg · 3×8', f2: '12-16 kg · 3×8-10', f3: 'Substituído por Bulgarian', f4: '—' }, sub: 'Sem haltere: kettlebell, mochila com peso, garrafão. Difícil: deficit RDL em cima de plate.', phases: [1,2] },
+  { id: 'pallof', name: 'Pallof Press', cat: 'Sessão A · Core', cue: 'Cabo lateral ao corpo, segurar na altura do peito. Empurrar até esticar os braços, 2s, retornar.', progression: { f1: 'Cabo 5-8 kg · 3×10', f2: '8-12 kg · 3×10', f3: 'Mantém · 3×10', f4: 'Apenas ativação · 2×8' }, sub: 'Sem cabo: band de resistência preso em ponto fixo. Substituto: Pallof Hold (segurar 20s) 3 séries.', phases: [1,2,3,4] },
+  { id: 'dead-bug', name: 'Dead Bug', cat: 'Sessão A · Core (F1)', cue: 'Deitado, braços para cima, quadril e joelhos a 90°. Abaixar braço + perna opostos quase tocando o chão, lombar colada.', progression: { f1: 'Sem carga · 3×5 cada', f2: 'Substituído por Farmer Carry', f3: '—', f4: '—' }, sub: 'Versão difícil: com haltere 2-3 kg. Substituto: Bird Dog 3×8 cada lado.', phases: [1] },
+  { id: 'farmers', name: "Farmer's Carry", cat: 'Sessão A · Core (F2+)', cue: 'Andar com peso, coluna ereta, ombros para trás. Parar a qualquer rotação excessiva.', progression: { f1: '—', f2: 'Halteres 16-20 kg · 3×20m', f3: 'Mais rápido · 3×20m', f4: '2×20m leve' }, sub: 'Sem halteres pesados: kettlebells, garrafões, mochila pesada. Unilateral (Suitcase Carry) é ainda melhor para anti-rotação.', phases: [2,3,4] },
+  { id: 'nordic', name: 'Nordic Curl', cat: 'Sessão B · Posterior', cue: 'Joelhos no chão, tornozelos fixos. Cair pra frente controlando com isquios — usar mãos pra amortecer.', progression: { f1: '3×4 descida 3-4s', f2: '3×6 descida 4-5s', f3: '3×5 + 2×3 unilateral', f4: '1×4 manutenção' }, sub: 'Sem parceiro: prender pés sob banco/sofá pesado. Última opção: Stiff-leg Deadlift pesado.', phases: [1,2,3,4] },
+  { id: 'calf-raise', name: 'Calf Raise excêntrico', cat: 'Sessão B · Tornozelo', cue: 'No step. Subir com dois pés, descer com um só em 4-5s. Amplitude total. Protege Aquiles.', progression: { f1: 'PC · 3×10 cada', f2: 'Mochila 3-5 kg · 3×12', f3: 'Mantém · 2×10', f4: '1×10 leve' }, sub: 'Sem step: degrau, calçada elevada. Variação: alternar com calf sentado (sóleo).', phases: [1,2,3,4] },
+  { id: 'tibial', name: 'Tibial Raise', cat: 'Sessão B · Anti-canelite', cue: 'Costas na parede, calcanhares 20cm afastados. Levantar pontas dos pés, pausar 1s.', progression: { f1: 'PC · 3×20', f2: '+ band · 3×15', f3: 'Mantém · 2×15', f4: '1×15 ativação' }, sub: 'Em casa: mesmo movimento sentado com peso no pé. Toe Walks: caminhar 20m nas pontas.', phases: [1,2,3,4] },
+  { id: 'step-up', name: 'Step-up + joelho', cat: 'Sessão B · Unilateral (F1)', cue: 'Step 40-50cm. Subir com uma perna, trazer joelho oposto ao peito. Descer controlado.', progression: { f1: 'PC · 3×8 cada', f2: 'Substituído por Bulgarian', f3: '—', f4: '—' }, sub: 'Sem step: cadeira firme, banco. Variação: halteres 6-8 kg.', phases: [1] },
+  { id: 'bulgarian', name: 'Bulgarian Split Squat', cat: 'Sessão B · Unilateral (F2+)', cue: 'Pé traseiro no banco. Descer controlado, joelho dianteiro não ultrapassa o pé. 3s descida.', progression: { f1: '—', f2: 'Halteres 10-12 kg · 4×8 cada', f3: '+box jump 2×5 cada', f4: '2×6 sem carga' }, sub: 'Sem banco: cadeira firme. Sem halteres: PC com pausa 2s no fundo.', phases: [2,3,4] },
+  { id: 'wrist-curl', name: 'Wrist Curl excêntrico', cat: 'Sessão B · Epicondilite', cue: 'Antebraço na coxa, palma para cima. Subir com 2 dedos, descer com lado afetado em 4-5s. Parar se dor >4/10.', progression: { f1: '1-2 kg · 2×15', f2: 'Gradual · 2×15', f3: 'Manter ou eliminar', f4: 'Eliminar' }, sub: 'Garrafa de água, lata. Variação reverso (palma para baixo) trabalha extensores.', phases: [1,2,3] },
+];
+
+const SUBSTITUTIONS = {
+  musc: [
+    {
+      id: 'cf-to-musc',
+      from: 'Não vou ao CrossFit',
+      title: 'Treino completo: força + hipertrofia',
+      desc: '60 min full body. Mantém força máxima E adiciona volume hipertrófico.',
+      detail: `<p>Substitui qualquer sessão de CrossFit. <strong style="color: var(--yellow);">Mantém força máxima e estimula hipertrofia</strong> — fundamental para não perder massa muscular ao longo das 24 semanas.</p>
+        <h4>Aquecimento (8 min)</h4>
+        <ul><li>Bike/esteira/remo Z2: 5 min</li><li>Mobilidade dinâmica: cat-cow, hip airplane, shoulder pass-through — 3 min</li></ul>
+        <h4>Bloco A — Força composta (~22 min)</h4>
+        <table>
+          <thead><tr><th>Exercício</th><th>Séries × Reps</th></tr></thead>
+          <tbody>
+            <tr><td>Agachamento livre ou barra</td><td>4 × 6-8</td></tr>
+            <tr><td>Supino reto ou inclinado</td><td>4 × 8</td></tr>
+            <tr><td>Remada curvada</td><td>4 × 8</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 12px; color: var(--text-muted);">Descanso 90-120s entre séries. Cargas pesadas com técnica perfeita.</p>
+        <h4>Bloco B — Hipertrofia (~20 min)</h4>
+        <table>
+          <thead><tr><th>Exercício</th><th>Séries × Reps</th></tr></thead>
+          <tbody>
+            <tr><td>Desenvolvimento ombro com halteres</td><td>4 × 10-12</td></tr>
+            <tr><td>Puxada alta ou pull-up</td><td>4 × 8-10</td></tr>
+            <tr><td>Leg press</td><td>3 × 12</td></tr>
+            <tr><td>Rosca direta + tríceps testa (superset)</td><td>3 × 12 cada</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 12px; color: var(--text-muted);">Descanso 60s. Foco em controle excêntrico e sentir o músculo.</p>
+        <h4>Finisher metabólico (8 min)</h4>
+        <ul><li>3 rounds AMRAP: 15 burpees + 20 air squats + 30s prancha</li></ul>
+        <p style="margin-top: 14px; padding: 10px; background: rgba(255,213,0,0.08); border-left: 2px solid var(--yellow); font-size: 12px;">⚠ Se for terça/sexta (dias com musculação A ou B), faça os exercícios da Sessão A/B <strong>antes</strong> do Bloco B. Não duplique trabalho de glúteo/core/posterior.</p>`
+    },
+    {
+      id: 'corrida-to-musc',
+      from: 'Não corro hoje',
+      title: 'Musculação inferior + posterior',
+      desc: '45 min focando pernas, força específica + volume hipertrófico.',
+      detail: `<p>Substituto para sessão de corrida quando há restrição (lesão leve, chuva, agenda). Mantém estímulo neural específico de corrida e adiciona hipertrofia nas pernas.</p>
+        <h4>Aquecimento (5 min)</h4>
+        <ul><li>Bike Z2 + mobilidade quadril/tornozelo</li></ul>
+        <h4>Bloco principal (~32 min)</h4>
+        <table>
+          <thead><tr><th>Exercício</th><th>Séries × Reps</th></tr></thead>
+          <tbody>
+            <tr><td>Agachamento búlgaro com halteres</td><td>4 × 10 cada</td></tr>
+            <tr><td>Hip Thrust pesado</td><td>4 × 8</td></tr>
+            <tr><td>Leg press unilateral</td><td>3 × 12 cada</td></tr>
+            <tr><td>Mesa flexora ou Nordic Curl</td><td>4 × 10</td></tr>
+            <tr><td>Stiff (RDL bilateral)</td><td>3 × 10</td></tr>
+            <tr><td>Panturrilha em pé</td><td>4 × 15</td></tr>
+          </tbody>
+        </table>
+        <h4>Finisher (5 min)</h4>
+        <ul><li>3 rounds: 20 walking lunges + 15 jump squats</li></ul>
+        <p style="margin-top: 12px; padding: 10px; background: rgba(255,213,0,0.08); border-left: 2px solid var(--yellow); font-size: 12px;">⚠ Substituindo a corrida principal de quarta? Tudo bem em F1-F2. Em F3 (intervalos Z4), só substituir em última instância — perde adaptação específica.</p>`
+    },
+    {
+      id: 'tenis-to-musc',
+      from: 'Não tenho tênis',
+      title: 'Musculação superior + estética',
+      desc: '50 min focando peito, costas, ombro e braços.',
+      detail: `<p>Quinta/domingo sem tênis = trabalhar parte superior que corrida e CrossFit não pegam direito. <strong>Foco estético e força funcional.</strong></p>
+        <h4>Aquecimento (5 min)</h4>
+        <ul><li>Esteira/bike + mobilidade ombro</li></ul>
+        <h4>Bloco principal (~35 min)</h4>
+        <table>
+          <thead><tr><th>Exercício</th><th>Séries × Reps</th></tr></thead>
+          <tbody>
+            <tr><td>Supino inclinado halteres</td><td>4 × 10</td></tr>
+            <tr><td>Puxada frente ou pull-up</td><td>4 × 8-10</td></tr>
+            <tr><td>Desenvolvimento militar</td><td>4 × 8</td></tr>
+            <tr><td>Remada baixa cabo</td><td>3 × 10</td></tr>
+            <tr><td>Crucifixo invertido (rear delt)</td><td>3 × 12</td></tr>
+            <tr><td>Rosca alternada + tríceps corda (superset)</td><td>3 × 12 cada</td></tr>
+            <tr><td>Abdominal cabo + prancha</td><td>3 rounds</td></tr>
+          </tbody>
+        </table>
+        <h4>Finisher (5 min)</h4>
+        <ul><li>3 rounds: 12 push-ups + 10 dips em banco + 30s superman hold</li></ul>
+        <p style="margin-top: 12px; padding: 10px; background: rgba(74,222,128,0.08); border-left: 2px solid var(--green); font-size: 12px;">✓ Útil principalmente em F1-F2. Em F3 evitar carga máxima. Em F4 (taper) evitar.</p>`
+    },
+    {
+      id: 'hyrox-to-musc',
+      from: 'Não vou ao NXT House',
+      title: 'Simulação Hyrox solo',
+      desc: '60 min recriando o formato em academia.',
+      detail: `<h4>Estrutura (60 min)</h4>
+        <p>Em academia com esteira ou no Ibirapuera (corrida fora) + estações de musculação.</p>
+        <h4>Aquecimento (8 min)</h4>
+        <ul><li>Bike + mobilidade dinâmica geral</li></ul>
+        <h4>Bloco principal — rounds (F1: 3 / F2: 4 / F3: 5)</h4>
+        <ol>
+          <li>500m corrida (Z3-Z4) na esteira</li>
+          <li>20 wall balls (ou agachamento + press com haltere 6-8 kg)</li>
+          <li>15 burpees broad jump</li>
+          <li>30 lunges alternados (com haltere se possível)</li>
+          <li>20 sit-ups</li>
+        </ol>
+        <p style="margin-top: 12px; padding: 10px; background: rgba(255,213,0,0.08); border-left: 2px solid var(--yellow); font-size: 12px;">⚠ Simulação solo é menos eficiente que NXT House — lá tem sled, SkiErg, rower de verdade. Prioridade é não perder o sábado quando possível.</p>`
+    },
+  ],
+  modal: [
+    {
+      id: 'tenis-to-corrida',
+      from: 'Não tenho tênis',
+      title: 'Corrida no lugar',
+      desc: 'Quinta = tempo / Domingo = longão leve',
+      detail: `<h4>Quinta (sem tênis 18h)</h4>
+        <ul><li>F1: 30 min Z2</li><li>F2: 35-40 min com 15-20 min Z3 no meio</li><li>F3: 4×800m Z4 com 90s recuperação</li></ul>
+        <h4>Domingo (sem tênis 10h)</h4>
+        <ul><li>F1: 30-40 min Z2 (estender sessão C)</li><li>F2: longão 8-10 km Z2</li><li>F3: longão 10-12 km Z2/Z3</li></ul>`
+    },
+    {
+      id: 'cf-to-tenis',
+      from: 'Não vou ao CrossFit',
+      title: 'Tênis extra',
+      desc: 'Substituir CrossFit por jogo de tênis',
+      detail: `<p>Sim, mas com cuidado:</p>
+        <ul>
+          <li>Atenção à epicondilite — usar protetor e aquecer antebraço antes</li>
+          <li>Não substituir o CrossFit de sexta (perto do NXT House de sábado)</li>
+          <li>Bom substituto para CrossFit de segunda ou quarta</li>
+        </ul>`
+    },
+  ],
+  condition: [
+    {
+      id: 'rain',
+      from: 'Chovendo',
+      title: 'Versão esteira',
+      desc: 'Ajustes de inclinação para compensar',
+      detail: `<h4>Equivalência esteira</h4>
+        <ul>
+          <li><strong>Inclinação 1-2%</strong>: padrão</li>
+          <li><strong>Pace ~10s mais rápido</strong> que rua para mesma FC</li>
+          <li>Z2 normal: inclinação 1%, FC 120-130</li>
+          <li>Tempo: inclinação 2%, pace 5:30/km</li>
+          <li>Intervalado Z4: inclinação 1%, pace 4:30-4:40/km</li>
+        </ul>
+        <p>FC continua sendo o melhor guia. Mesmos alertas no Amazfit.</p>`
+    },
+    {
+      id: 'short',
+      from: 'Tempo curto',
+      title: 'Versão condensada',
+      desc: 'Reduzir 30-40% mantendo essência',
+      detail: `<h4>Versões reduzidas</h4>
+        <ul>
+          <li><strong>Sessão A</strong>: cortar para 15-20 min, manter aquec/resfr 5 min</li>
+          <li><strong>Sessão B</strong>: cortar para 20 min Z2</li>
+          <li><strong>Musculação A</strong>: Hip Thrust 3×8 + RDL 3×8 + Pallof 2×8</li>
+          <li><strong>Musculação B</strong>: Nordic 3×4 + Calf 3×8 + Tibial 2×15</li>
+        </ul>
+        <p>Regra: nunca pular o aquecimento. Cortar é melhor que pular.</p>`
+    },
+    {
+      id: 'fadigue',
+      from: 'DOMS forte / fadiga',
+      title: 'Recovery ativo',
+      desc: 'Sessão regenerativa',
+      detail: `<h4>Sinais para recovery</h4>
+        <ul>
+          <li>FC de repouso 5+ bpm acima do normal</li>
+          <li>DOMS forte de treino há 48h+</li>
+          <li>Sono ruim 2 noites seguidas</li>
+        </ul>
+        <h4>Sessão recovery (30 min)</h4>
+        <ul>
+          <li>10 min caminhada / esteira muito leve</li>
+          <li>15 min mobilidade: 90/90, hip airplane, world's greatest stretch</li>
+          <li>5 min foam roller</li>
+        </ul>`
+    },
+    {
+      id: 'travel',
+      from: 'Viagem',
+      title: 'Plano viagem',
+      desc: 'Manter ciclo fora de casa',
+      detail: `<h4>Prioridades</h4>
+        <ol>
+          <li>Corrida Z2 (só precisa de tênis)</li>
+          <li>Mobilidade + ativação</li>
+          <li>Musculação peso corporal</li>
+          <li>Hyrox solo (se tiver academia)</li>
+        </ol>
+        <h4>Sessão hotel (30 min, sem equipamento)</h4>
+        <ul><li>3 rounds: 15 lunges cada + 15 push-ups + 30s prancha + 15 glute bridges</li><li>Finisher: 10 min trote</li></ul>`
+    },
+  ]
+};
+
+const DOW = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
+const DOW_FULL = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+const MONTHS = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+
+function parseDate(s) {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+function fmtDateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function dayDiff(d1, d2) {
+  return Math.round((d2.getTime() - d1.getTime()) / (1000*60*60*24));
+}
+function getCurrentWeekNum(today, startDate) {
+  const start = parseDate(startDate);
+  const startDow = start.getDay();
+  const startMon = new Date(start);
+  if (startDow !== 1) startMon.setDate(startMon.getDate() + (1 - startDow + 7) % 7);
+  const diff = dayDiff(startMon, today);
+  return Math.floor(diff / 7) + 1;
+}
+function getPhaseForWeek(weekNum) {
+  return PLAN.phases.find(p => weekNum >= p.startWeek && weekNum <= p.endWeek) || PLAN.phases[0];
+}
+
+async function storageGet(key) {
+  try {
+    if (typeof window.storage !== 'undefined') {
+      const r = await window.storage.get(key);
+      return r ? JSON.parse(r.value) : null;
+    } else {
+      const v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : null;
+    }
+  } catch (e) { return null; }
+}
+async function storageSet(key, value) {
+  try {
+    if (typeof window.storage !== 'undefined') {
+      await window.storage.set(key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+    return true;
+  } catch (e) { return false; }
+}
+async function storageList(prefix) {
+  try {
+    if (typeof window.storage !== 'undefined') {
+      const r = await window.storage.list(prefix);
+      return r ? r.keys : [];
+    } else {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(prefix)) keys.push(k);
+      }
+      return keys;
+    }
+  } catch (e) { return []; }
+}
+
+function buildRunSegments(phase, sessionType, weekIdx, B_string) {
+  const phaseId = phase.id;
+  if (sessionType === 'A') {
+    const min = (RUN_PROGRESSION[phaseId]?.A || [0])[weekIdx] || 0;
+    const mainMin = Math.max(min - 10, 10);
+    return {
+      total: min,
+      warmup: { time: '5\'', title: 'AQUECIMENTO', desc: '5 min trote muito leve (FC < 100 bpm). Aumentar gradualmente.', extra: 'Antes: rotina de mobilidade 3 min.' },
+      main: { time: `${mainMin}'`, title: 'PRINCIPAL · Z2', desc: `${mainMin} min Z2 contínuo. FC 114-132 bpm. Ritmo conversacional.`, extra: 'Manter FC estável, não acelerar nem nas descidas.' },
+      cooldown: { time: '5\'', title: 'COOLDOWN', desc: '5 min caminhada até FC < 100 bpm.', extra: 'Alongamento em casa.' }
+    };
+  }
+  if (sessionType === 'B') {
+    if (phaseId === 1) {
+      const min = (RUN_PROGRESSION[1]?.B || [0])[weekIdx] || 0;
+      const mainMin = Math.max(min - 15, 18);
+      return {
+        total: min,
+        warmup: { time: '8\'', title: 'AQUECIMENTO', desc: '4 min caminhada rápida + mobilidade + 2 min trote leve. Rotina 3 min antes.', extra: 'Sessão mais importante da semana — não pular.' },
+        main: { time: `${mainMin}'`, title: 'PRINCIPAL · Z2', desc: `${mainMin} min Z2. FC 114-132. Rota: volta do Ibirapuera (~3.9 km).`, extra: 'Sem 1-3: 1 volta. Sem 4-5: iniciar 2ª volta parcial.' },
+        cooldown: { time: '7\'', title: 'COOLDOWN', desc: '5 min caminhada + alongamento quadríceps/isquio/panturrilha 30s cada.', extra: '' }
+      };
+    }
+    if (phaseId === 2) {
+      const min = (RUN_PROGRESSION[2]?.B || [0])[weekIdx] || 0;
+      const type = (RUN_PROGRESSION[2]?.BType || [])[weekIdx] || 'Z2 contínuo';
+      return {
+        total: min,
+        warmup: { time: '10\'', title: 'AQUECIMENTO', desc: '10 min Z2 progressivo. Rotina 3 min antes.', extra: 'FC já em ~120 bpm antes do bloco principal.' },
+        main: { time: '—', title: 'PRINCIPAL', desc: `${type}.`, extra: type.includes('Z4') ? 'Pace ~4:45/km nos intervalos. Recuperação trotando leve.' : type.includes('Z3') ? 'Pace 5:20-5:49/km. FC 133-151.' : 'Mantém Z2 estável.' },
+        cooldown: { time: '5\'', title: 'COOLDOWN', desc: '5 min trote Z1 + caminhada.', extra: '' }
+      };
+    }
+    if (phaseId === 3) {
+      const desc = (RUN_PROGRESSION[3]?.B || [])[weekIdx] || '';
+      return {
+        total: '~50 min',
+        warmup: { time: '15\'', title: 'AQUECIMENTO', desc: '10 min Z2 + 5 min com 3-4 strides de 20s. Rotina 3 min antes.', extra: '' },
+        main: { time: '—', title: 'PRINCIPAL · Z4', desc: desc, extra: 'Pace alvo Z4: 4:35-4:50. Recuperação trotando Z1.' },
+        cooldown: { time: '10\'', title: 'COOLDOWN', desc: '10 min trote Z1 + alongamento.', extra: 'FC < 120 antes de parar.' }
+      };
+    }
+    if (phaseId === 4) {
+      return {
+        total: '~30 min',
+        warmup: { time: '5\'', title: 'AQUECIMENTO', desc: 'Trote leve progressivo.', extra: '' },
+        main: { time: '—', title: 'PRINCIPAL', desc: B_string, extra: 'Manter intensidade, reduzir volume.' },
+        cooldown: { time: '5\'', title: 'COOLDOWN', desc: 'Caminhada + alongamento.', extra: '' }
+      };
+    }
+  }
+  if (sessionType === 'C') {
+    const cData = (RUN_PROGRESSION[phaseId]?.C || [])[weekIdx];
+    if (typeof cData === 'number' && cData > 0) {
+      const mainMin = Math.max(cData - 5, 12);
+      return {
+        total: cData,
+        warmup: { time: '3\'', title: 'AQUECIMENTO', desc: phaseId === 1 ? 'Sair andando 3 min, transicionar para trote leve.' : '3 min trote progressivo.', extra: 'Mobilidade 2 min antes basta.' },
+        main: { time: `${mainMin}'`, title: phaseId === 1 ? 'SOLTURA · Z1/Z2' : 'PRINCIPAL · Z2', desc: phaseId === 1 ? 'Trote leve. FC máxima 132 bpm. Se subir, caminhar até baixar.' : `${mainMin} min Z2. FC 114-132.`, extra: phaseId === 1 ? 'Não comprometer o tênis das 10h.' : '' },
+        cooldown: { time: '2\'', title: 'COOLDOWN', desc: 'Caminhada leve.', extra: '' }
+      };
+    }
+    if (typeof cData === 'string') {
+      return {
+        total: 'longão',
+        warmup: { time: '10\'', title: 'AQUECIMENTO', desc: '10 min Z2 progressivo. Rotina 3 min antes.', extra: '' },
+        main: { time: '—', title: 'LONGÃO', desc: cData, extra: 'Sessão chave de volume aeróbico.' },
+        cooldown: { time: '5\'', title: 'COOLDOWN', desc: 'Trote leve + caminhada + alongamento.', extra: '' }
+      };
+    }
+  }
+  return null;
+}
+
+function getWorkoutsForDay(date) {
+  const weekNum = getCurrentWeekNum(date, PLAN.startDate);
+  const dow = date.getDay();
+  const phase = getPhaseForWeek(weekNum);
+  if (weekNum < 1 || weekNum > 24) {
+    return { weekNum, dow, phase, workouts: [{type: 'rest', name: 'Fora do ciclo', desc: 'Esta data está fora das 24 semanas.', priority: 'optional', when: '—'}] };
+  }
+  const weekIdx = weekNum - phase.startWeek;
+  const workouts = [];
+
+  switch (dow) {
+    case 1:
+      workouts.push({ type: 'crossfit', when: 'Manhã', name: 'CrossFit', priority: 'primary', desc: 'WOD do box, intensidade normal. Aguardar mín. 4h antes da corrida da tarde.', tags: [{ text: 'CROSSFIT', cls: '' }] });
+      const aSeg = buildRunSegments(phase, 'A', weekIdx);
+      if (aSeg) workouts.push({ type: 'corrida', when: 'Tarde', name: `Sessão A — ${aSeg.total} min`, priority: 'secondary', segments: aSeg, tags: [{ text: 'Z2', cls: 'zone-z2' }, { text: '< 132 bpm', cls: '' }, { text: `${aSeg.total} min`, cls: '' }] });
+      break;
+    case 2:
+      workouts.push({ type: 'crossfit', when: 'Manhã', name: 'CrossFit', priority: 'primary', desc: 'WOD normal.', tags: [{ text: 'CROSSFIT', cls: '' }] });
+      workouts.push({ type: 'musculacao-A', when: 'Pós-CF', name: 'Musculação Sessão A', priority: 'primary', strengthKey: 'A', phaseId: phase.id });
+      break;
+    case 3:
+      workouts.push({ type: 'crossfit', when: 'Manhã', name: 'CrossFit', priority: 'primary', desc: 'WOD normal. Se a corrida da tarde for sessão de tempo/intervalo, reduzir intensidade do WOD.', tags: [{ text: 'CROSSFIT', cls: '' }] });
+      const bData = RUN_PROGRESSION[phase.id]?.B?.[weekIdx];
+      if (bData !== undefined && bData !== null) {
+        const bSeg = buildRunSegments(phase, 'B', weekIdx, typeof bData === 'string' ? bData : '');
+        if (bSeg) {
+          const tags = [];
+          if (phase.id === 1) tags.push({ text: 'Z2', cls: 'zone-z2' }, { text: `${bData} min`, cls: 'yellow' });
+          else if (phase.id === 2) {
+            const t = RUN_PROGRESSION[2].BType[weekIdx];
+            tags.push({ text: t.includes('Z4') ? 'Z4' : (t.includes('Z3') ? 'Z3' : 'Z2'), cls: t.includes('Z4') ? 'zone-z4' : (t.includes('Z3') ? 'zone-z3' : 'zone-z2') }, { text: `${bData} min`, cls: 'yellow' });
+          } else if (phase.id === 3) tags.push({ text: 'Z4', cls: 'zone-z4' }, { text: 'INTERVAL', cls: '' });
+          else tags.push({ text: 'TAPER', cls: 'yellow' });
+          workouts.push({ type: 'corrida', when: 'Manhã (alt.)', name: 'Sessão B — Principal', priority: 'primary', segments: bSeg, tags });
+        }
+      }
+      break;
+    case 4:
+      workouts.push({ type: 'rest', when: 'Manhã', name: 'Recuperação ativa', priority: 'optional', desc: 'Dia leve. Mobilidade, foam roller, alongamento.', tags: [{ text: 'RECOVERY', cls: '' }] });
+      workouts.push({ type: 'tenis', when: '18h', name: 'Tênis', priority: 'primary', desc: 'Aula regular. Atenção à epicondilite — aquecer antebraço antes.', tags: [{ text: 'TÊNIS', cls: '' }, { text: '18:00', cls: '' }] });
+      break;
+    case 5:
+      workouts.push({ type: 'crossfit', when: 'Hora almoço', name: 'CrossFit', priority: 'primary', desc: 'WOD normal. Amanhã é NXT House — não destrua as pernas.', tags: [{ text: 'CROSSFIT', cls: '' }] });
+      workouts.push({ type: 'musculacao-B', when: 'Pós-CF', name: 'Musculação Sessão B', priority: 'primary', strengthKey: 'B', phaseId: phase.id });
+      const fData = RUN_PROGRESSION[phase.id]?.F?.[weekIdx];
+      if (fData) {
+        if (typeof fData === 'string') {
+          workouts.push({ type: 'corrida', when: 'Tarde (opc.)', name: 'Strides', priority: 'optional', desc: `Dentro de trote Z2 leve, fazer ${fData}. Cada stride = aceleração gradual de 20s em pace ~4:30. 60s trote leve entre cada.`, tags: [{ text: 'STRIDES', cls: '' }] });
+        } else if (typeof fData === 'number' && fData > 0) {
+          workouts.push({ type: 'corrida', when: 'Tarde (opc.)', name: `Soltura — ${fData} min`, priority: 'optional', desc: 'Trote leve para soltar pernas. Z1 puro.', tags: [{ text: 'Z1', cls: 'zone-z1' }] });
+        }
+      }
+      break;
+    case 6:
+      workouts.push({ type: 'hyrox', when: 'Manhã', name: 'NXT House — Hyrox', priority: 'primary', desc: phase.id <= 2 ? 'Aula em grupo. Foco em estações + cardio. Treino central da preparação.' : 'Aula focada em simulação. Pedir ao coach para incluir bricks (corrida + estação seguidas).', tags: [{ text: 'NXT HOUSE', cls: 'yellow' }, { text: 'HYROX', cls: '' }] });
+      break;
+    case 0:
+      const cSeg = buildRunSegments(phase, 'C', weekIdx);
+      if (cSeg) {
+        const tags = [{ text: phase.id === 1 ? 'Z1/Z2' : 'Z2', cls: 'zone-z2' }];
+        if (typeof cSeg.total === 'number') tags.push({ text: `${cSeg.total} min`, cls: '' });
+        else tags.push({ text: cSeg.total.toUpperCase(), cls: 'yellow' });
+        workouts.push({ type: 'corrida', when: '7h15', name: phase.id === 1 ? 'Sessão C — Soltura' : 'Sessão C — Longão', priority: phase.id === 1 ? 'optional' : 'primary', segments: cSeg, tags });
+      }
+      workouts.push({ type: 'tenis', when: '10h', name: 'Tênis', priority: 'primary', desc: 'Aula regular. Se pernas pesadas, reduzir intensidade.', tags: [{ text: 'TÊNIS', cls: '' }, { text: '10:00', cls: '' }] });
+      break;
+  }
+
+  return { weekNum, dow, phase, weekIdx, workouts };
+}
+
+let STATE = {
+  today: new Date(),
+  selectedWeek: 1,
+  selectedDay: null,
+  raceDate: PLAN.defaultRaceDate,
+  exerciseFilter: 'all',
+  ci_pain: 0,
+  ci_energy: 5,
+};
+STATE.today.setHours(0,0,0,0);
+
+async function init() {
+  const saved = await storageGet('hyrox:raceDate');
+  if (saved) STATE.raceDate = saved;
+  document.getElementById('raceDateInput').value = STATE.raceDate;
+  document.getElementById('racePresetLabel').textContent = formatRaceDateLabel(STATE.raceDate);
+
+  STATE.selectedWeek = getCurrentWeekNum(STATE.today, PLAN.startDate);
+  if (STATE.selectedWeek < 1) STATE.selectedWeek = 1;
+  if (STATE.selectedWeek > 24) STATE.selectedWeek = 24;
+
+  renderHeader();
+  await renderDashboard();
+  await renderToday();
+  renderWeek();
+  renderCycle();
+  renderSubstitutions();
+  renderBricks();
+  renderZones();
+  renderCheckin();
+  renderPlanner();
+
+  document.querySelectorAll('nav.tabs button').forEach(b => {
+    b.addEventListener('click', () => goTab(b.dataset.tab));
+  });
+
+  document.getElementById('raceDateInput').addEventListener('change', async (e) => {
+    STATE.raceDate = e.target.value;
+    await storageSet('hyrox:raceDate', STATE.raceDate);
+    document.getElementById('racePresetLabel').textContent = formatRaceDateLabel(STATE.raceDate);
+    renderHeader();
+    showToast('DATA SALVA');
+  });
+
+  document.getElementById('weekPrev').addEventListener('click', () => { if (STATE.selectedWeek > 1) { STATE.selectedWeek--; renderWeek(); }});
+  document.getElementById('weekNext').addEventListener('click', () => { if (STATE.selectedWeek < 24) { STATE.selectedWeek++; renderWeek(); }});
+}
+
+function formatRaceDateLabel(s) {
+  const d = parseDate(s);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function goTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector(`nav.tabs button[data-tab="${name}"]`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function renderHeader() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const race = parseDate(STATE.raceDate);
+  const days = dayDiff(today, race);
+  document.getElementById('daysToRace').textContent = days >= 0 ? days : 'PROVA';
+
+  const currentWeek = getCurrentWeekNum(today, PLAN.startDate);
+  const phaseBar = document.getElementById('phaseBar');
+  phaseBar.innerHTML = PLAN.phases.map(p => {
+    const isActive = currentWeek >= p.startWeek && currentWeek <= p.endWeek;
+    return `<div class="phase-pill ${isActive ? 'active' : ''}">${p.short}<span class="week-count">${p.startWeek}-${p.endWeek}</span></div>`;
+  }).join('');
+}
+
+async function renderDashboard() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const start = parseDate(PLAN.startDate);
+  const diffStart = dayDiff(start, today);
+  const totalDays = 24 * 7;
+  const elapsed = Math.max(0, Math.min(diffStart, totalDays));
+
+  const statusKeys = await storageList('hyrox:status:');
+  let doneCount = 0, partialCount = 0;
+  for (const k of statusKeys) {
+    const v = await storageGet(k);
+    if (v === 'done') doneCount++;
+    else if (v === 'partial') partialCount++;
+  }
+  const restKeys = await storageList('hyrox:rest:');
+  let restCount = 0;
+  for (const k of restKeys) {
+    const v = await storageGet(k);
+    if (v) restCount++;
+  }
+
+  let streak = 0;
+  for (let i = 0; i < 60; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    if (d < start) break;
+    const key = fmtDateKey(d);
+    const data = getWorkoutsForDay(d);
+    const restStatus = await storageGet(`hyrox:rest:${key}`);
+    let dayHasAction = !!restStatus;
+    if (!dayHasAction) {
+      for (let j = 0; j < data.workouts.length; j++) {
+        const s = await storageGet(`hyrox:status:${key}:${j}`);
+        if (s === 'done' || s === 'partial') { dayHasAction = true; break; }
+      }
+    }
+    if (dayHasAction) streak++;
+    else if (i > 0) break;
+  }
+
+  const pct = Math.min(100, Math.round((elapsed / totalDays) * 100));
+
+  document.getElementById('dashboard').innerHTML = `
+    <div class="dash-row-top">
+      <div>
+        <div class="dash-progress-label">PROGRESSO DO CICLO</div>
+        <div><span class="dash-progress-num">${pct}</span><span class="dash-progress-suffix">%</span></div>
+        <div class="dash-bar"><div class="dash-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div>
+        <div class="dash-progress-label">SEMANA</div>
+        <div><span class="dash-progress-num">${Math.min(24, Math.max(1, getCurrentWeekNum(today, PLAN.startDate)))}</span><span class="dash-progress-suffix">/24</span></div>
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.08em; text-transform: uppercase;">${getPhaseForWeek(getCurrentWeekNum(today, PLAN.startDate)).name}</div>
+      </div>
+    </div>
+    <div class="dash-stats-row">
+      <div class="dash-stat">
+        <div class="dash-stat-num" style="color: var(--green);">${doneCount}</div>
+        <div class="dash-stat-label">TREINOS FEITOS</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" style="color: var(--yellow);">${streak}</div>
+        <div class="dash-stat-label">DIAS SEGUIDOS</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" style="color: var(--blue);">${restCount}</div>
+        <div class="dash-stat-label">DESCANSOS</div>
+      </div>
+    </div>
+  `;
+}
+
+async function renderToday() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const data = getWorkoutsForDay(today);
+  const phase = data.phase;
+
+  document.getElementById('todayPhaseName').textContent = phase.name.toUpperCase();
+  document.getElementById('todayWeekNum').textContent = data.weekNum;
+  document.getElementById('todayDateStr').textContent = `${DOW_FULL[today.getDay()].toUpperCase()} ${today.getDate()} ${MONTHS[today.getMonth()]}`;
+  const dayNum = dayDiff(parseDate(PLAN.startDate), today) + 1;
+  document.getElementById('todayMetaStr').textContent = `Dia ${dayNum} de 168 · ${168 - dayNum} restantes`;
+
+  const dateKey = fmtDateKey(today);
+  const isRestDay = await storageGet(`hyrox:rest:${dateKey}`);
+
+  const restBtn = document.getElementById('restDayBtn');
+  if (isRestDay) {
+    restBtn.classList.add('active');
+    restBtn.textContent = '☾ DESCANSO ATIVO · REVERTER';
+  } else {
+    restBtn.classList.remove('active');
+    restBtn.textContent = '☾ MARCAR HOJE COMO DESCANSO';
+  }
+
+  const container = document.getElementById('todayWorkouts');
+
+  if (isRestDay) {
+    container.innerHTML = `<div class="workout-block rest">
+      <div class="wb-header">
+        <div class="workout-time">${DOW_FULL[today.getDay()]}</div>
+        <div class="workout-name">☾ DIA DE DESCANSO</div>
+        <div class="workout-desc">Você marcou este dia como descanso. Recuperação é treino — sono, hidratação e nutrição em primeiro lugar.</div>
+      </div>
+    </div>`;
+  } else if (data.workouts.length === 0) {
+    container.innerHTML = '<div class="empty-msg">Nenhum treino programado</div>';
+  } else {
+    const html = await Promise.all(data.workouts.map(async (w, idx) => {
+      const status = await storageGet(`hyrox:status:${dateKey}:${idx}`) || null;
+      const log = await storageGet(`hyrox:log:${dateKey}:${idx}`) || {};
+      return renderWorkoutBlock(w, dateKey, idx, status, log, true);
+    }));
+    container.innerHTML = html.join('');
+  }
+  attachActionListeners(container);
+  attachStrengthListeners(container);
+  attachWarmupListeners(container);
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const td = getWorkoutsForDay(tomorrow);
+  const tc = document.getElementById('tomorrowWorkouts');
+  if (td.workouts.length === 0) {
+    tc.innerHTML = '<div class="empty-msg">Sem treino amanhã</div>';
+  } else {
+    tc.innerHTML = `<div style="font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px;">${DOW_FULL[tomorrow.getDay()]} ${tomorrow.getDate()} ${MONTHS[tomorrow.getMonth()]}</div>` +
+      td.workouts.map(w => `<div class="workout-block ${w.priority || ''}">
+        <div class="wb-header">
+          <div class="workout-time">${w.when}</div>
+          <div class="workout-name">${w.name}</div>
+          ${w.tags ? `<div class="workout-meta">${w.tags.map(t => `<span class="tag ${t.cls||''}">${t.text}</span>`).join('')}</div>` : ''}
+        </div>
+      </div>`).join('');
+  }
+}
+
+async function toggleRestDay() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const key = fmtDateKey(today);
+  const current = await storageGet(`hyrox:rest:${key}`);
+  if (current) {
+    await storageSet(`hyrox:rest:${key}`, false);
+    showToast('DESCANSO REMOVIDO');
+  } else {
+    await storageSet(`hyrox:rest:${key}`, true);
+    showToast('DESCANSO MARCADO');
+  }
+  await renderDashboard();
+  await renderToday();
+}
+
+function renderWorkoutBlock(w, dateKey, idx, status, log, withActions) {
+  if (w.type === 'musculacao-A' || w.type === 'musculacao-B') {
+    return renderStrengthBlock(w, dateKey, idx, status, log, withActions);
+  }
+  if (w.segments) {
+    return renderRunningBlock(w, dateKey, idx, status, log, withActions);
+  }
+  return renderGenericBlock(w, dateKey, idx, status, log, withActions);
+}
+
+function renderGenericBlock(w, dateKey, idx, status, log, withActions) {
+  const tagsHtml = w.tags ? `<div class="workout-meta">${w.tags.map(t => `<span class="tag ${t.cls||''}">${t.text}</span>`).join('')}</div>` : '';
+  return `<div class="workout-block ${w.priority || ''} ${status === 'done' ? 'completed' : ''}">
+    <div class="wb-header">
+      <div class="workout-time">${w.when}</div>
+      <div class="workout-name">${w.name}</div>
+      <div class="workout-desc">${w.desc || ''}</div>
+      ${tagsHtml}
+    </div>
+    ${withActions ? renderActions(dateKey, idx, status, log, false) : ''}
+  </div>`;
+}
+
+function renderRunningBlock(w, dateKey, idx, status, log, withActions) {
+  const seg = w.segments;
+  const tagsHtml = w.tags ? `<div class="workout-meta">${w.tags.map(t => `<span class="tag ${t.cls||''}">${t.text}</span>`).join('')}</div>` : '';
+  return `<div class="workout-block ${w.priority || ''} ${status === 'done' ? 'completed' : ''}">
+    <div class="wb-header">
+      <div class="workout-time">${w.when}</div>
+      <div class="workout-name">${w.name}</div>
+      ${tagsHtml}
+    </div>
+    <div class="run-segments">
+      <button class="warmup-routine-btn" data-warmup-btn="1">▶ VER ROTINA DE AQUECIMENTO (3 MIN)</button>
+      <div class="run-seg">
+        <div class="run-seg-time">${seg.warmup.time}<small>antes</small></div>
+        <div>
+          <div class="run-seg-title warmup">${seg.warmup.title}</div>
+          <div>${seg.warmup.desc}</div>
+          ${seg.warmup.extra ? `<div class="run-seg-extra">${seg.warmup.extra}</div>` : ''}
+        </div>
+      </div>
+      <div class="run-seg">
+        <div class="run-seg-time">${seg.main.time}<small>foco</small></div>
+        <div>
+          <div class="run-seg-title">${seg.main.title}</div>
+          <div>${seg.main.desc}</div>
+          ${seg.main.extra ? `<div class="run-seg-extra">${seg.main.extra}</div>` : ''}
+        </div>
+      </div>
+      <div class="run-seg">
+        <div class="run-seg-time">${seg.cooldown.time}<small>final</small></div>
+        <div>
+          <div class="run-seg-title cooldown">${seg.cooldown.title}</div>
+          <div>${seg.cooldown.desc}</div>
+          ${seg.cooldown.extra ? `<div class="run-seg-extra">${seg.cooldown.extra}</div>` : ''}
+        </div>
+      </div>
+    </div>
+    ${withActions ? renderActions(dateKey, idx, status, log, true) : ''}
+  </div>`;
+}
+
+function renderStrengthBlock(w, dateKey, idx, status, log, withActions) {
+  const sw = STRENGTH_WORKOUTS[w.strengthKey];
+  const exs = sw.exercises[w.phaseId] || sw.exercises[1];
+  const tagsHtml = `<div class="strength-tags">${sw.tags.map(t => `<span class="tag ${t.cls||''}">${t.text}</span>`).join('')}</div>`;
+  const exListHtml = exs.map(e => {
+    const data = btoa(unescape(encodeURIComponent(JSON.stringify({n: e.name, c: e.cue, h: e.hint}))));
+    return `<div class="strength-ex-row" data-ex-b64="${data}">
+      <div class="strength-ex-num">${e.num}</div>
+      <div>
+        <div class="strength-ex-name">${e.name}</div>
+        <div class="strength-ex-hint">${e.hint}</div>
+      </div>
+      <div class="strength-ex-sets">${e.sets}<small>séries × reps</small></div>
+    </div>`;
+  }).join('');
+  return `<div class="strength-card ${status === 'done' ? 'completed' : ''}">
+    <div class="strength-header">
+      <div class="strength-when">${w.when} · ${sw.duration}</div>
+      <div class="strength-name">${w.name}</div>
+      <div style="font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.08em;">${sw.focus}</div>
+      ${tagsHtml}
+    </div>
+    ${exListHtml}
+    <div class="strength-footer">${sw.rest} · toque em um exercício para ver a técnica</div>
+    ${withActions ? renderActions(dateKey, idx, status, log, false) : ''}
+  </div>`;
+}
+
+function renderActions(dateKey, idx, status, log, includeRunLog) {
+  let actions = `<div class="actions-section">
+    <div class="action-row" data-key="${dateKey}:${idx}">
+      <button class="action-btn done ${status === 'done' ? 'active' : ''}" data-status="done">✓ FEITO</button>
+      <button class="action-btn partial ${status === 'partial' ? 'active' : ''}" data-status="partial">~ PARCIAL</button>
+      <button class="action-btn skipped ${status === 'skipped' ? 'active' : ''}" data-status="skipped">✗ PULADO</button>
+    </div>`;
+  if (includeRunLog || status) {
+    actions += `<div class="log-form">
+      ${includeRunLog ? `
+        <label><span class="lbl-text">FC MÉDIA</span><input type="number" data-log="${dateKey}:${idx}:hr" placeholder="bpm" value="${log.hr||''}"></label>
+        <label><span class="lbl-text">PACE</span><input type="text" data-log="${dateKey}:${idx}:pace" placeholder="min:seg/km" value="${log.pace||''}"></label>` : ''}
+      <label class="full"><span class="lbl-text">SENSAÇÃO / NOTA</span><textarea data-log="${dateKey}:${idx}:notes" placeholder="Como foi?">${log.notes||''}</textarea></label>
+    </div>`;
+  }
+  actions += '</div>';
+  return actions;
+}
+
+function attachActionListeners(container) {
+  container.querySelectorAll('.action-row').forEach(row => {
+    const key = row.dataset.key;
+    row.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const newStatus = btn.dataset.status;
+        const cur = await storageGet(`hyrox:status:${key}`);
+        if (cur === newStatus) {
+          await storageSet(`hyrox:status:${key}`, null);
+          btn.classList.remove('active');
+        } else {
+          await storageSet(`hyrox:status:${key}`, newStatus);
+          row.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        showToast('SALVO');
+        await renderDashboard();
+      });
+    });
+  });
+  container.querySelectorAll('[data-log]').forEach(input => {
+    input.addEventListener('change', async () => {
+      const [date, idx, field] = input.dataset.log.split(':');
+      const k = `hyrox:log:${date}:${idx}`;
+      const cur = (await storageGet(k)) || {};
+      cur[field] = input.value;
+      await storageSet(k, cur);
+      showToast('SALVO');
+    });
+  });
+}
+
+function attachStrengthListeners(container) {
+  container.querySelectorAll('.strength-ex-row').forEach(row => {
+    row.addEventListener('click', () => {
+      try {
+        const info = JSON.parse(decodeURIComponent(escape(atob(row.dataset.exB64))));
+        openModal(info.n, info.h, `<p>${info.c}</p>`);
+      } catch (e) { console.error(e); }
+    });
+  });
+}
+
+function attachWarmupListeners(container) {
+  container.querySelectorAll('[data-warmup-btn]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openWarmupModal();
+    });
+  });
+}
+
+function openWarmupModal() {
+  const stepsHtml = WARMUP_ROUTINE.map((s, i) => `<div class="warmup-step">
+    <div class="warmup-step-num">${i+1}</div>
+    <div>
+      <div class="warmup-step-name">${s.name}</div>
+      <div class="warmup-step-desc">${s.desc}</div>
+    </div>
+    <div class="warmup-step-time">${s.time}</div>
+  </div>`).join('');
+  openModal('Aquecimento de corrida', '~3 MIN · ANTES DE CADA CORRIDA', `
+    <p style="margin-bottom: 12px;">Rotina rápida para preparar tendões, ativar musculatura específica e elevar FC para Z1 antes do trote.</p>
+    ${stepsHtml}
+    <p style="margin-top: 16px; padding: 10px; background: rgba(96,165,250,0.08); border-left: 2px solid var(--blue); font-size: 12px; color: var(--text-muted);">💡 Em corridas muito leves (Sessão A pós-CrossFit ou Sessão C de domingo), pode simplificar para 5-6 (skipping + trote no lugar).</p>
+  `);
+}
+
+function renderWeek() {
+  const wn = STATE.selectedWeek;
+  const phase = getPhaseForWeek(wn);
+  document.getElementById('weekNavLabel').innerHTML = `SEMANA ${wn}<span class="phase-tag">${phase.name.toUpperCase()}</span>`;
+  document.getElementById('weekPrev').disabled = wn <= 1;
+  document.getElementById('weekNext').disabled = wn >= 24;
+
+  const start = parseDate(PLAN.startDate);
+  const startDow = start.getDay();
+  const monday = new Date(start);
+  if (startDow !== 1) monday.setDate(monday.getDate() + (1 - startDow + 7) % 7);
+  monday.setDate(monday.getDate() + (wn - 1) * 7);
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const strip = document.getElementById('weekStrip');
+  let dayCells = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(d.getDate() + i);
+    const isToday = d.getTime() === today.getTime();
+    const data = getWorkoutsForDay(d);
+    const pico = data.workouts.find(w => w.priority === 'primary');
+    const ico = pico ? typeIcon(pico.type) : '·';
+    const isSel = STATE.selectedDay && fmtDateKey(STATE.selectedDay) === fmtDateKey(d);
+    dayCells += `<div class="week-day ${isToday ? 'today' : ''} ${isSel ? 'selected' : ''}" data-date="${fmtDateKey(d)}">
+      <div class="dow">${DOW[d.getDay()]}</div>
+      <div class="date-num">${d.getDate()}</div>
+      <div class="ico">${ico}</div>
+      <div class="status-dot"></div>
+    </div>`;
+  }
+  strip.innerHTML = dayCells;
+
+  if (!STATE.selectedDay || getCurrentWeekNum(STATE.selectedDay, PLAN.startDate) !== wn) {
+    if (today >= monday && today < new Date(monday.getTime() + 7*24*3600*1000)) {
+      STATE.selectedDay = today;
+    } else {
+      STATE.selectedDay = monday;
+    }
+  }
+
+  applyStatusesToWeekStrip();
+
+  strip.querySelectorAll('.week-day').forEach(c => {
+    c.addEventListener('click', () => {
+      strip.querySelectorAll('.week-day').forEach(x => x.classList.remove('selected'));
+      c.classList.add('selected');
+      STATE.selectedDay = parseDate(c.dataset.date);
+      renderWeekDayDetail();
+    });
+  });
+
+  renderWeekDayDetail();
+}
+
+async function applyStatusesToWeekStrip() {
+  const cells = document.querySelectorAll('#weekStrip .week-day');
+  for (const c of cells) {
+    const dateKey = c.dataset.date;
+    const date = parseDate(dateKey);
+    const data = getWorkoutsForDay(date);
+    const isRest = await storageGet(`hyrox:rest:${dateKey}`);
+    if (isRest) {
+      c.classList.add('rest-day');
+      const icoEl = c.querySelector('.ico');
+      if (icoEl) icoEl.textContent = '☾';
+      continue;
+    }
+    let statuses = [];
+    for (let i = 0; i < data.workouts.length; i++) {
+      const s = await storageGet(`hyrox:status:${dateKey}:${i}`);
+      if (s) statuses.push(s);
+    }
+    if (statuses.length === 0) continue;
+    const allDone = statuses.every(s => s === 'done');
+    const anyPartial = statuses.some(s => s === 'partial');
+    const anySkipped = statuses.some(s => s === 'skipped');
+    if (allDone && statuses.length === data.workouts.length) c.classList.add('done');
+    else if (anyPartial) c.classList.add('partial');
+    else if (anySkipped) c.classList.add('skipped');
+  }
+}
+
+function typeIcon(type) {
+  switch(type) {
+    case 'crossfit': return '◇';
+    case 'corrida': return '→';
+    case 'musculacao-A':
+    case 'musculacao-B': return '▮';
+    case 'tenis': return '◯';
+    case 'hyrox': return '★';
+    case 'rest': return '○';
+    default: return '·';
+  }
+}
+
+async function renderWeekDayDetail() {
+  if (!STATE.selectedDay) return;
+  const date = STATE.selectedDay;
+  const data = getWorkoutsForDay(date);
+  const c = document.getElementById('weekDayDetail');
+  const dateKey = fmtDateKey(date);
+  const isRest = await storageGet(`hyrox:rest:${dateKey}`);
+
+  c.innerHTML = `<div style="font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin: 14px 0 8px;">${DOW_FULL[date.getDay()]} · ${date.getDate()} ${MONTHS[date.getMonth()]}</div>`;
+
+  if (isRest) {
+    c.innerHTML += `<div class="workout-block rest">
+      <div class="wb-header">
+        <div class="workout-name">☾ DIA DE DESCANSO</div>
+        <div class="workout-desc">Marcado como descanso voluntário.</div>
+      </div>
+    </div>`;
+    return;
+  }
+
+  if (data.workouts.length === 0) {
+    c.innerHTML += '<div class="empty-msg">Sem treinos neste dia</div>';
+    return;
+  }
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const isPastOrToday = date <= today;
+  const html = await Promise.all(data.workouts.map(async (w, idx) => {
+    const status = await storageGet(`hyrox:status:${dateKey}:${idx}`);
+    const log = await storageGet(`hyrox:log:${dateKey}:${idx}`) || {};
+    return renderWorkoutBlock(w, dateKey, idx, status, log, isPastOrToday);
+  }));
+  c.innerHTML += html.join('');
+  attachActionListeners(c);
+  attachStrengthListeners(c);
+  attachWarmupListeners(c);
+}
+
+function renderCycle() {
+  const grid = document.getElementById('cycleGrid');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const currentWeek = getCurrentWeekNum(today, PLAN.startDate);
+  let html = '';
+  for (let w = 1; w <= 24; w++) {
+    const phase = getPhaseForWeek(w);
+    const isCurrent = w === currentWeek && currentWeek >= 1 && currentWeek <= 24;
+    const isRace = w === 24;
+    html += `<div class="cycle-week phase-${phase.id} ${isCurrent ? 'current' : ''} ${isRace ? 'race' : ''}" data-week="${w}">
+      <div class="wn">${isRace ? '🏁' : w}</div>
+      <div class="ph">${isRace ? 'PROVA' : phase.short}</div>
+    </div>`;
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll('.cycle-week').forEach(el => {
+    el.addEventListener('click', () => {
+      STATE.selectedWeek = parseInt(el.dataset.week);
+      goTab('semana');
+      renderWeek();
+    });
+  });
+}
+
+function renderExercises() {
+  const filterEl = document.getElementById('exerciseFilter');
+  const list = document.getElementById('exerciseList');
+  if (!filterEl || !list) return;
+  const filters = [
+    { id: 'A', label: 'SESSÃO A' },
+    { id: 'B', label: 'SESSÃO B' },
+    { id: 'f1', label: 'FASE 1' },
+    { id: 'f2', label: 'FASE 2' },
+    { id: 'f3', label: 'FASE 3' },
+  ];
+  filterEl.innerHTML = filters.map(f => `<button class="filter-btn ${STATE.exerciseFilter === f.id ? 'active' : ''}" data-filter="${f.id}">${f.label}</button>`).join('');
+  filterEl.querySelectorAll('.filter-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      STATE.exerciseFilter = b.dataset.filter;
+      renderExercises();
+    });
+  });
+
+  let exs = EXERCISES;
+  const f = STATE.exerciseFilter;
+  if (f === 'A') exs = exs.filter(e => e.cat.includes('Sessão A'));
+  else if (f === 'B') exs = exs.filter(e => e.cat.includes('Sessão B'));
+  else if (f.startsWith('f')) {
+    const n = parseInt(f.substring(1));
+    exs = exs.filter(e => e.phases.includes(n));
+  }
+  list.innerHTML = exs.map(e => `<div class="exercise-card">
+    <div class="ex-header">
+      <div class="ex-name">${e.name}</div>
+      <div class="ex-cat">${e.cat}</div>
+    </div>
+    <div class="ex-cue">${e.cue}</div>
+    <div class="ex-progression">
+      <div class="ex-prog-cell"><div class="ph-name">F1</div><div class="ph-val">${e.progression.f1}</div></div>
+      <div class="ex-prog-cell"><div class="ph-name">F2</div><div class="ph-val">${e.progression.f2}</div></div>
+      <div class="ex-prog-cell"><div class="ph-name">F3</div><div class="ph-val">${e.progression.f3}</div></div>
+      <div class="ex-prog-cell"><div class="ph-name">F4</div><div class="ph-val">${e.progression.f4}</div></div>
+    </div>
+    <div class="ex-sub"><strong>Substituição:</strong> ${e.sub}</div>
+  </div>`).join('');
+}
+
+function renderSubstitutions() {
+  const renderGroup = (groupId, items) => items.map(s => `<div class="sub-card" data-sub-id="${s.id}" data-group="${groupId}">
+    <div class="sub-head">
+      <span class="sub-from">${s.from}</span>
+      <span class="sub-arrow">→</span>
+    </div>
+    <div class="sub-title">${s.title}</div>
+    <div class="sub-desc">${s.desc}</div>
+  </div>`).join('');
+
+  document.getElementById('muscSubGrid').innerHTML = renderGroup('musc', SUBSTITUTIONS.musc);
+  document.getElementById('modalSubGrid').innerHTML = renderGroup('modal', SUBSTITUTIONS.modal);
+  document.getElementById('conditionSubGrid').innerHTML = renderGroup('condition', SUBSTITUTIONS.condition);
+
+  document.querySelectorAll('.sub-card').forEach(c => {
+    c.addEventListener('click', () => {
+      const group = c.dataset.group;
+      const id = c.dataset.subId;
+      const item = SUBSTITUTIONS[group].find(s => s.id === id);
+      if (item) openModal(item.title, item.from, item.detail);
+    });
+  });
+}
+
+function renderZones() {
+  document.getElementById('zoneList').innerHTML = PLAN.zones.map(z => `
+    <div class="zone-row ${z.id}">
+      <div class="zone-name">${z.name}</div>
+      <div>
+        <div class="zone-label-row">${z.label}</div>
+        <div class="zone-data">FC <span class="yellow">${z.hrLow === 0 ? '< ' + (z.hrHigh+1) : z.hrLow + '–' + z.hrHigh}</span> bpm · pace ${z.pace} · ${z.sense}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderCheckin() {
+  const sel = document.getElementById('ci_week');
+  const cur = getCurrentWeekNum(new Date(), PLAN.startDate);
+  let opts = '';
+  for (let w = 1; w <= 24; w++) {
+    opts += `<option value="${w}" ${w === cur ? 'selected' : ''}>Semana ${w} · ${getPhaseForWeek(w).name}</option>`;
+  }
+  sel.innerHTML = opts;
+
+  const painScale = document.getElementById('ci_pain_scale');
+  painScale.style.gridTemplateColumns = 'repeat(11, 1fr)';
+  let pHtml = '';
+  for (let i = 0; i <= 10; i++) pHtml += `<button type="button" class="scale-btn" data-pain="${i}">${i}</button>`;
+  painScale.innerHTML = pHtml;
+  painScale.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      STATE.ci_pain = parseInt(b.dataset.pain);
+      painScale.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+
+  const energyScale = document.getElementById('ci_energy_scale');
+  energyScale.style.gridTemplateColumns = 'repeat(10, 1fr)';
+  let eHtml = '';
+  for (let i = 1; i <= 10; i++) eHtml += `<button type="button" class="scale-btn ${i === 5 ? 'active' : ''}" data-energy="${i}">${i}</button>`;
+  energyScale.innerHTML = eHtml;
+  energyScale.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      STATE.ci_energy = parseInt(b.dataset.energy);
+      energyScale.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+}
+
+function generateCheckin() {
+  const week = document.getElementById('ci_week').value;
+  const phase = getPhaseForWeek(parseInt(week));
+  const data = {
+    week: week,
+    phase: phase.name,
+    runsDone: document.getElementById('ci_runs_done').value || '—',
+    runsSkipped: document.getElementById('ci_runs_skipped').value || '—',
+    z2Data: document.getElementById('ci_z2_data').value || '—',
+    strength: document.getElementById('ci_strength').value || '—',
+    nordic: document.getElementById('ci_nordic').value || '—',
+    pain: STATE.ci_pain,
+    energy: STATE.ci_energy,
+    nxt: document.getElementById('ci_nxt').value || '—',
+    notes: document.getElementById('ci_notes').value || '—',
+  };
+
+  const txt = `**CHECK-IN SEMANA ${data.week} · ${data.phase}**
+
+🏃 Corrida
+- Sessões concluídas: ${data.runsDone}
+- Pulados/motivo: ${data.runsSkipped}
+- FC/Pace Z2: ${data.z2Data}
+
+💪 Força
+- Musculação: ${data.strength}
+- Nordic: ${data.nordic}
+
+📊 Estado
+- Epicondilite (0-10): ${data.pain}
+- Energia/sono (1-10): ${data.energy}
+
+🔥 NXT House: ${data.nxt}
+
+📝 Obs: ${data.notes}`;
+
+  const out = document.getElementById('checkinOutput');
+  out.innerHTML = `<div class="card elevated">
+    <div style="font-family: var(--mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px;">RESUMO GERADO</div>
+    <textarea readonly style="width: 100%; min-height: 280px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px; font-family: var(--mono); font-size: 12px; line-height: 1.6;">${txt}</textarea>
+    <button class="btn full compact" style="margin-top: 10px;" onclick="copyCheckin(this)">COPIAR</button>
+  </div>`;
+  storageSet(`hyrox:checkin:${data.week}`, data);
+}
+
+function copyCheckin(btn) {
+  const ta = btn.parentElement.querySelector('textarea');
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('COPIADO');
+  } catch (e) {
+    navigator.clipboard.writeText(ta.value).then(() => showToast('COPIADO'));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BRICKS HYROX
+// ═══════════════════════════════════════════════════════════════
+
+const BRICKS = [
+  {
+    id: 'brick-f1',
+    phase: 'F1 — Fundação',
+    name: 'Introdução ao Brick',
+    desc: '3 rounds. Primeiro contato com corrida + estação.',
+    detail: `<p>Objetivo: sentir como o corpo reage ao esforço misto. Sem preocupação com pace ou carga.</p>
+      <h4>Estrutura (3 rounds)</h4>
+      <table>
+        <thead><tr><th>Round</th><th>Corrida</th><th>Estação</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>400m Z2 (trotão leve)</td><td>20 air squats + 10 push-ups</td></tr>
+          <tr><td>2</td><td>400m Z2</td><td>15 lunges alternados + 10 push-ups</td></tr>
+          <tr><td>3</td><td>400m Z2</td><td>20 step-ups + 15 sit-ups</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted);">Descanso 2 min entre rounds. Duração total: ~25 min. Ideal como substituição da Sessão C ou extra no sábado.</p>`
+  },
+  {
+    id: 'brick-f2a',
+    phase: 'F2 — Construção',
+    name: 'Brick 4 rounds com SkiErg / Rower',
+    desc: '4 rounds. Adiciona equipamento específico Hyrox.',
+    detail: `<p>Foco: transição corrida → estação e manter forma após fadiga cardiovascular.</p>
+      <h4>Estrutura (4 rounds)</h4>
+      <table>
+        <thead><tr><th>Round</th><th>Corrida</th><th>Estação</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>500m Z3 (pace ~5:30/km)</td><td>200m SkiErg ou 200m Rower</td></tr>
+          <tr><td>2</td><td>500m Z3</td><td>20 wall balls (6-8 kg)</td></tr>
+          <tr><td>3</td><td>500m Z3</td><td>20m sled push ou 30 walking lunges c/ halteres</td></tr>
+          <tr><td>4</td><td>500m Z3</td><td>20 burpees broad jump</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted);">Descanso 90s entre rounds. Duração total: ~40 min com aquecimento. Pedir ao coach do NXT House para incluir esse formato.</p>`
+  },
+  {
+    id: 'brick-f2b',
+    phase: 'F2 — Construção',
+    name: 'Brick corrida sob fadiga',
+    desc: 'Estação → corrida. Inverte a ordem para simular pior caso.',
+    detail: `<p>No Hyrox real, você corre após cada estação. Este brick treina especificamente esse padrão mais exigente.</p>
+      <h4>Estrutura (4 rounds)</h4>
+      <table>
+        <thead><tr><th>Round</th><th>Estação primeiro</th><th>Corrida depois</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>25 wall balls (6 kg)</td><td>500m Z3/Z4</td></tr>
+          <tr><td>2</td><td>30 walking lunges c/ halteres 8 kg</td><td>500m Z4</td></tr>
+          <tr><td>3</td><td>15 farmer carry 20m ida/volta</td><td>500m Z3/Z4</td></tr>
+          <tr><td>4</td><td>200m SkiErg ou 200m remo</td><td>400m Z4 (ritmo de prova)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted);">Descanso 2 min. Esse formato é mais difícil — legs pesados. Fazer no máximo 1x/semana na F2.</p>`
+  },
+  {
+    id: 'brick-f3',
+    phase: 'F3 — Específico',
+    name: 'Simulação parcial Hyrox (5-6 rounds)',
+    desc: '5-6 rounds no formato oficial 1km + estação.',
+    detail: `<p>Formato mais próximo da prova. Não simule os 8 rounds completos todo treino — 5-6 rounds geram adaptação sem acúmulo excessivo.</p>
+      <h4>Estrutura (5 rounds, F3 início → 6 rounds, F3 meio)</h4>
+      <table>
+        <thead><tr><th>Round</th><th>Corrida</th><th>Estação (formato oficial)</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>1 km pace prova (~4:50/km)</td><td>1000m SkiErg</td></tr>
+          <tr><td>2</td><td>1 km</td><td>50m sled push</td></tr>
+          <tr><td>3</td><td>1 km</td><td>50m sled pull</td></tr>
+          <tr><td>4</td><td>1 km</td><td>80m burpee broad jump</td></tr>
+          <tr><td>5</td><td>1 km</td><td>1000m remo</td></tr>
+          <tr><td>6*</td><td>1 km</td><td>200m farmer carry</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted);">*Round 6 apenas a partir da semana 17. Se não tiver sled/SkiErg: substituir por equivalente (bike, rower, halteres). Fazer no NXT House quando possível — lá tem equipamento correto.</p>
+      <h4>Regra de pace</h4>
+      <p>Semanas 15-17: pace confortável (5:00-5:10). Semanas 18-21: pace de prova (4:45-4:55). Nunca comprometer a forma das estações pelo pace.</p>`
+  },
+];
+
+function renderBricks() {
+  const el = document.getElementById('bricksGrid');
+  if (!el) return;
+  el.innerHTML = BRICKS.map(b => `
+    <div class="brick-card" data-brick="${b.id}">
+      <div class="brick-phase">${b.phase}</div>
+      <div class="brick-name">${b.name}</div>
+      <div class="brick-desc">${b.desc}</div>
+    </div>
+  `).join('');
+  el.querySelectorAll('.brick-card').forEach(c => {
+    c.addEventListener('click', () => {
+      const brick = BRICKS.find(b => b.id === c.dataset.brick);
+      if (brick) openModal(brick.name, brick.phase, brick.detail);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// EXPORT / IMPORT / RESET
+// ═══════════════════════════════════════════════════════════════
+
+async function exportData() {
+  const allKeys = await storageList('hyrox:');
+  const data = { exported: new Date().toISOString(), version: 2, entries: {} };
+  for (const k of allKeys) {
+    const v = await storageGet(k);
+    if (v !== null) data.entries[k] = v;
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `hyrox-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('EXPORTADO');
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.entries) { showToast('ARQUIVO INVÁLIDO'); return; }
+      const count = Object.keys(data.entries).length;
+      if (!confirm(`Importar ${count} registros? Os dados atuais serão SUBSTITUÍDOS.`)) return;
+      for (const [k, v] of Object.entries(data.entries)) {
+        await storageSet(k, v);
+      }
+      showToast(`${count} REGISTROS IMPORTADOS`);
+      await renderDashboard();
+      await renderToday();
+    } catch (err) {
+      showToast('ERRO AO IMPORTAR');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+async function confirmResetData() {
+  if (!confirm('⚠ Apagar TODOS os dados de treino? Isso é irreversível.')) return;
+  const allKeys = await storageList('hyrox:');
+  for (const k of allKeys) {
+    await storageSet(k, null);
+    if (typeof window.storage !== 'undefined') {
+      try { await window.storage.delete(k); } catch(e) {}
+    } else {
+      localStorage.removeItem(k);
+    }
+  }
+  showToast('DADOS APAGADOS');
+  await renderDashboard();
+  await renderToday();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ADAPTIVE WEEK PLANNER
+// ═══════════════════════════════════════════════════════════════
+
+const PLANNER_DAYS = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'DOM'];
+const PLANNER_DAYS_FULL = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+const PLANNER_DOW = [1, 2, 3, 4, 5, 6, 0]; // JS day-of-week mapping
+
+let PLANNER_STATE = {
+  available: [true, true, true, false, true, true, true],
+  desired: { corrida: 3, hyrox: 1, crossfit: 2, musculacao: 2, tenis: 2, descanso: 1 },
+  condition: { energia: 7, sono: 7, doms: 2, cotovelo: 2 }
+};
+
+function renderPlanner() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const weekNum = getCurrentWeekNum(today, PLAN.startDate);
+  const phase = getPhaseForWeek(weekNum);
+  const el = document.getElementById('plannerWeekInfo');
+  if (el) el.textContent = `Semana ${weekNum} · ${phase.name} · gerando plano adaptativo`;
+
+  // Day toggles
+  const dtEl = document.getElementById('plannerDayToggles');
+  if (dtEl) {
+    dtEl.innerHTML = PLANNER_DAYS.map((d, i) => `
+      <div class="day-toggle ${PLANNER_STATE.available[i] ? 'active' : ''}" data-day="${i}">${d}</div>
+    `).join('');
+    dtEl.querySelectorAll('.day-toggle').forEach(t => {
+      t.addEventListener('click', () => {
+        const i = parseInt(t.dataset.day);
+        PLANNER_STATE.available[i] = !PLANNER_STATE.available[i];
+        t.classList.toggle('active', PLANNER_STATE.available[i]);
+      });
+    });
+  }
+
+  // Steppers
+  const steps = [
+    { key: 'corrida', label: 'Corrida', max: 4 },
+    { key: 'hyrox', label: 'Hyrox/NXT', max: 2 },
+    { key: 'crossfit', label: 'CrossFit', max: 5 },
+    { key: 'musculacao', label: 'Musculação', max: 4 },
+    { key: 'tenis', label: 'Tênis', max: 3 },
+    { key: 'descanso', label: 'Descanso', max: 3 },
+  ];
+  const stEl = document.getElementById('plannerSteppers');
+  if (stEl) {
+    stEl.innerHTML = steps.map(s => `
+      <div class="stepper-item">
+        <div class="stepper-label">${s.label}</div>
+        <div class="stepper-ctrl">
+          <button class="stepper-btn" data-key="${s.key}" data-dir="-1">−</button>
+          <div class="stepper-val" id="sv_${s.key}">${PLANNER_STATE.desired[s.key]}</div>
+          <button class="stepper-btn" data-key="${s.key}" data-dir="1">+</button>
+        </div>
+      </div>
+    `).join('');
+    stEl.querySelectorAll('.stepper-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        const key = b.dataset.key;
+        const dir = parseInt(b.dataset.dir);
+        const s = steps.find(x => x.key === key);
+        const cur = PLANNER_STATE.desired[key];
+        PLANNER_STATE.desired[key] = Math.max(0, Math.min(s.max, cur + dir));
+        document.getElementById('sv_' + key).textContent = PLANNER_STATE.desired[key];
+      });
+    });
+  }
+
+  // Condition
+  const conditions = [
+    { key: 'energia', label: 'Energia (1-10)', min: 1, max: 10 },
+    { key: 'sono', label: 'Sono (1-10)', min: 1, max: 10 },
+    { key: 'doms', label: 'DOMS pernas (0-5)', min: 0, max: 5 },
+    { key: 'cotovelo', label: 'Cotovelo dor (0-10)', min: 0, max: 10 },
+  ];
+  const cEl = document.getElementById('plannerCondition');
+  if (cEl) {
+    cEl.innerHTML = conditions.map(c => `
+      <div class="condition-item">
+        <div class="condition-label">${c.label}</div>
+        <div class="condition-val" id="cv_${c.key}">${PLANNER_STATE.condition[c.key]}</div>
+        <input type="range" min="${c.min}" max="${c.max}" value="${PLANNER_STATE.condition[c.key]}" data-cond="${c.key}">
+      </div>
+    `).join('');
+    cEl.querySelectorAll('input[type=range]').forEach(r => {
+      r.addEventListener('input', () => {
+        const key = r.dataset.cond;
+        PLANNER_STATE.condition[key] = parseInt(r.value);
+        document.getElementById('cv_' + key).textContent = r.value;
+      });
+    });
+  }
+}
+
+function generateAdaptiveWeek() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const weekNum = getCurrentWeekNum(today, PLAN.startDate);
+  const phase = getPhaseForWeek(weekNum);
+  const cond = PLANNER_STATE.condition;
+  const desired = PLANNER_STATE.desired;
+  const avail = PLANNER_STATE.available;
+
+  // Find monday of current week
+  const monday = new Date(today);
+  const dow = today.getDay();
+  monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+
+  // Score condition
+  const fatigued = cond.energia <= 4 || cond.sono <= 4 || cond.doms >= 4;
+  const highPain = cond.cotovelo >= 5;
+
+  // Build day slots (0=Mon, 6=Sun)
+  const days = PLANNER_DAYS.map((label, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    return {
+      idx: i,
+      dowJS: PLANNER_DOW[i],
+      label,
+      labelFull: PLANNER_DAYS_FULL[i],
+      date: d,
+      available: avail[i],
+      sessions: [],
+      risk: 'rest',
+      conflicts: []
+    };
+  });
+
+  // Fixed sessions
+  days[3].sessions.push({ name: 'Tênis', type: 'tenis', load: 'mid', hint: '18h — fixo' });
+  days[5].sessions.push({ name: 'NXT House / Hyrox', type: 'hyrox', load: 'high', hint: 'Manhã — sessão-chave' });
+  days[6].sessions.push({ name: 'Tênis', type: 'tenis', load: 'mid', hint: '10h — fixo' });
+
+  // Phase priorities
+  const keyRun = phase.id === 1 ? 'Z2 base' : phase.id === 2 ? 'Z3/Z4 qualidade' : phase.id === 3 ? 'Intervalos Z4' : 'Z2 leve';
+  const runsLeft = Math.max(0, desired.corrida);
+  const cfLeft = Math.max(0, desired.crossfit);
+
+  // Place CrossFit (Mon, Tue, Wed, Fri preferred)
+  const cfSlots = [0, 1, 2, 4].filter(i => avail[i]);
+  cfSlots.slice(0, Math.min(cfLeft, 3)).forEach(i => {
+    days[i].sessions.push({ name: 'CrossFit', type: 'crossfit', load: 'mid', hint: 'WOD normal' });
+  });
+
+  // Place Musculação A (Tue), B (Fri)
+  if (desired.musculacao >= 1 && avail[1]) {
+    days[1].sessions.push({ name: 'Musculação A', type: 'musculacao', load: 'low', hint: 'Glúteo + core — pós-CF' });
+  }
+  if (desired.musculacao >= 2 && avail[4]) {
+    const loadB = fatigued ? 'low' : 'mid';
+    days[4].sessions.push({ name: 'Musculação B', type: 'musculacao', load: loadB, hint: fatigued ? 'Volume reduzido por fadiga' : 'Posterior + Aquiles' });
+  }
+
+  // Place runs: Wed (main), Mon PM, Sun (optional)
+  if (runsLeft >= 1 && avail[2]) {
+    const runHint = phase.id === 1 ? 'Sessão B — Z2 principal (~35 min)' : phase.id === 2 ? `Sessão B — ${keyRun}` : `Sessão B — ${keyRun} (sessão-chave)`;
+    days[2].sessions.push({ name: 'Corrida Principal', type: 'corrida', load: phase.id >= 3 ? 'high' : 'mid', hint: runHint });
+  }
+  if (runsLeft >= 2 && avail[0]) {
+    days[0].sessions.push({ name: 'Corrida A', type: 'corrida', load: 'low', hint: 'Sessão A — Z2 pós-CrossFit (~20-25 min)' });
+  }
+  if (runsLeft >= 3 && avail[6]) {
+    days[6].sessions.push({ name: 'Corrida Soltura', type: 'corrida', load: 'low', hint: 'Sessão C — Z1/Z2 leve (20-25 min) — antes do tênis 10h' });
+  }
+
+  // Descanso voluntário
+  const restCandidates = [3, 6].filter(i => !days[i].sessions.some(s => s.type !== 'tenis'));
+  if (desired.descanso >= 1 && restCandidates.length > 0 && fatigued) {
+    const ri = restCandidates[0];
+    days[ri].sessions = [{ name: 'Descanso ativo', type: 'rest', load: 'low', hint: 'Mobilidade + foam roller 15 min' }];
+  }
+
+  // Detect conflicts
+  days.forEach(day => {
+    const types = day.sessions.map(s => s.type);
+    // Check heavy legs before hyrox
+    if (days[4].sessions.some(s => s.type === 'musculacao')) {
+      const bSession = days[4].sessions.find(s => s.name.includes('B'));
+      if (bSession && bSession.load !== 'low') {
+        days[4].conflicts.push('Musculação B pesada véspera do NXT House → reduzir Nordic/pernas');
+      }
+    }
+    // Heavy day after heavy day
+    if (day.idx > 0) {
+      const prevHeavy = days[day.idx - 1].sessions.some(s => s.load === 'high');
+      const curHeavy = day.sessions.some(s => s.load === 'high');
+      if (prevHeavy && curHeavy) {
+        day.conflicts.push('2 dias intensos consecutivos → considerar um recovery');
+      }
+    }
+    // Double CF + quality run same day
+    if (types.includes('crossfit') && types.includes('corrida')) {
+      const runLoad = day.sessions.find(s => s.type === 'corrida')?.load;
+      if (runLoad === 'high') {
+        day.conflicts.push('CrossFit + corrida Z4 no mesmo dia → reduzir CF ou mover corrida');
+      }
+    }
+    // Condition override
+    if (fatigued) {
+      day.sessions.forEach(s => {
+        if (s.load === 'high') s.load = 'mid';
+      });
+      if (!day.conflicts.includes('Fadiga detectada')) {
+        if (day.sessions.length > 0) day.conflicts.push('Energia/sono baixos — intensidade reduzida automaticamente');
+      }
+    }
+    if (highPain && types.includes('musculacao') && day.sessions.find(s => s.name.includes('B'))) {
+      day.conflicts.push('Dor no cotovelo ≥5 → eliminar Wrist Curl e evitar push-press pesado');
+    }
+
+    // Compute day risk
+    const loads = day.sessions.map(s => s.load);
+    if (!day.available || day.sessions.length === 0) day.risk = 'rest';
+    else if (loads.includes('high') || day.conflicts.length > 0) day.risk = 'high';
+    else if (loads.filter(l => l === 'mid').length >= 2) day.risk = 'mid';
+    else day.risk = 'low';
+  });
+
+  // Weekly load score
+  const totalHigh = days.filter(d => d.risk === 'high').length;
+  const totalMid = days.filter(d => d.risk === 'mid').length;
+  const weekLoad = totalHigh >= 3 ? 'ALTO' : totalHigh >= 2 || totalMid >= 4 ? 'MÉDIO' : 'CONTROLADO';
+  const weekLoadColor = weekLoad === 'ALTO' ? 'var(--red)' : weekLoad === 'MÉDIO' ? 'var(--orange)' : 'var(--green)';
+
+  const html = `
+    <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 12px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="font-family: var(--display); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em;">Carga semanal estimada</div>
+      <div style="font-family: var(--display); font-weight: 900; font-size: 18px; color: ${weekLoadColor};">${weekLoad}</div>
+    </div>
+    <div class="risk-week">
+      ${days.map(day => {
+        if (!day.available && day.sessions.length === 0) {
+          return `<div class="risk-day risk-rest">
+            <div><div class="risk-dow">${day.label}</div><div class="risk-date">${day.date.getDate()}/${day.date.getMonth()+1}</div></div>
+            <div style="font-size: 13px; color: var(--text-dim);">Indisponível</div>
+            <div></div>
+          </div>`;
+        }
+        if (day.sessions.length === 0) {
+          return `<div class="risk-day risk-rest">
+            <div><div class="risk-dow">${day.label}</div><div class="risk-date">${day.date.getDate()}/${day.date.getMonth()+1}</div></div>
+            <div style="font-size: 13px; color: var(--blue);">☾ Descanso</div>
+            <span class="risk-badge rest">OK</span>
+          </div>`;
+        }
+        const badgeClass = day.risk === 'high' ? 'high' : day.risk === 'mid' ? 'mid' : 'low';
+        const badgeText = day.risk === 'high' ? 'ATENÇÃO' : day.risk === 'mid' ? 'MÉDIO' : 'OK';
+        return `<div class="risk-day risk-${day.risk}">
+          <div><div class="risk-dow">${day.label}</div><div class="risk-date">${day.date.getDate()}/${day.date.getMonth()+1}</div></div>
+          <div class="risk-sessions">
+            ${day.sessions.map(s => `<div><div class="risk-session-name">${s.name}</div><div class="risk-session-hint">${s.hint}</div></div>`).join('')}
+            ${day.conflicts.length > 0 ? `<div class="risk-conflicts">${day.conflicts.map(c => `⚠ ${c}`).join('<br>')}</div>` : ''}
+          </div>
+          <span class="risk-badge ${badgeClass}">${badgeText}</span>
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="margin-top: 14px; padding: 12px; background: rgba(255,213,0,0.06); border-left: 2px solid var(--yellow); font-size: 12.5px; line-height: 1.6;">
+      <strong style="font-family: var(--display); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em;">Sessões-chave da semana:</strong><br>
+      ${phase.id === 1 ? 'Corrida Z2 de quarta · NXT House sábado. Tudo o mais suporta essas duas.' : phase.id === 2 ? ('Corrida ' + keyRun + ' de quarta · NXT House sábado. CrossFit e musculação suportam essas duas.') : phase.id === 3 ? 'Intervalos Z4 de quarta · Simulação NXT House sábado. Reduzir tudo o mais.' : 'Taper — reduzir volume, manter ativação. Chegar fresco na prova.'}
+    </div>
+  `;
+
+  document.getElementById('plannerResult').innerHTML = html;
+  showToast('SEMANA GERADA');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PWA
+// ═══════════════════════════════════════════════════════════════
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+
+function openModal(title, sub, content) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalSub').textContent = sub || '';
+  document.getElementById('modalContent').innerHTML = content;
+  document.getElementById('modal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+init();
+</script>
+</body>
+</html>
